@@ -1,12 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native';
+import { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from './screens/LoginScreen';
+import DashboardScreen from './screens/DashboardScreen';
+import ViewMembersScreen from './screens/ViewMembersScreen';
+import ViewWeekScreen from './screens/ViewWeekScreen';
+import AddWODScreen from './screens/AddWODScreen';
 
 export default function App() {
+
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <NavigationContainer>
+
+      <Stack.Navigator>
+        <Stack.Screen
+          name='Login'
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          name='Dashboard'
+          component={DashboardScreen}
+        />
+        <Stack.Screen
+          name='View Members'
+          component={ViewMembersScreen}
+        />
+        <Stack.Screen
+          name='View Week'
+          component={ViewWeekScreen}
+        />
+        <Stack.Screen
+          name='Add WOD'
+          component={AddWODScreen}
+        />
+      </Stack.Navigator>
+
+    </NavigationContainer>
+
   );
 }
 
