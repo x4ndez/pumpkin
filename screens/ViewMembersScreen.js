@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-nativ
 import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
 
-export default function ViewMembersScreen() {
+export default function ViewMembersScreen({ navigation }) {
 
   const [userData, setUserData] = useState();
 
@@ -36,9 +36,15 @@ export default function ViewMembersScreen() {
             <Text>{item.name}</Text>
             <Button
               title='X'
+
             />
             <Button
               title='Info'
+              onPress={() => {
+                navigation.navigate('Profile', {
+                  memberId: item.id,
+                })
+              }}
             />
           </View>)
           }

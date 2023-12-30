@@ -18,13 +18,12 @@ export default function AddClassBtn() {
   ];
 
   const [classNameInp, setClassNameInp] = useState();
-  const [classTypeInp, setClassTypeInp] = useState();
-  const [timePeriodInp, setTimePeriodInp] = useState(); // [x, x, y, y]
+  const [classTypeInp, setClassTypeInp] = useState(pickerOptions[0]);
   const [startTimeInp, setStartTimeInp] = useState(new Date());
   const [endTimeInp, setEndTimeInp] = useState(new Date());
   const [startTimePickerVisible, setStartTimePickerVisible] = useState(false);
   const [endTimePickerVisible, setEndTimePickerVisible] = useState(false);
-  const [dateInp, setDateInp] = useState(Date.now());
+  const [dateInp, setDateInp] = useState(new Date(Date.now()));
   const [recurringInp, setRecurringInp] = useState(false);
   const [daysActiveInp, setDaysActiveInp] = useState([
     { day: 'Monday', active: false },
@@ -34,22 +33,9 @@ export default function AddClassBtn() {
     { day: 'Friday', active: false },
     { day: 'Saturday', active: false },
     { day: 'Sunday', active: false },
-
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  const setDate = (event, date) => {
-    const {
-      type,
-      nativeEvent,
-    } = event;
-  };
-
-
-  useEffect(() => {
-    console.log(startTimeInp)
-  }, [startTimeInp]);
 
   // className  String
   //   classType  String
@@ -58,32 +44,33 @@ export default function AddClassBtn() {
   //   recurring  Boolean
   //   daysActive String ?
 
-  // async function addClassPress({ navigation }) {
+  async function addClass() {
 
-  //   const classInp = {
+    const payload = {
+      className: classNameInp,
+      classType: classTypeInp,
+      startTime: startTimeInp,
+      endTime: endTimeInp,
+      dateOf: dateInp,
+      recurring: recurringInp,
+      daysActive: daysActiveInp,
+    }
 
-  //   }
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload),
+    });
 
-  //   const res = await fetch(`http://${localhostUrl}:3000/api/users`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(userInp),
-  //   });
+    // const resBody = await res.json();
 
-  //   const resBody = await res.json();
+    // Alert.alert(resBody.code === 1 ? 'Success!' : 'Failure!', resBody.msg);
 
-  //   onChangeEmailInp('');
-  //   onChangeNameInp('');
-  //   setModalVisible(false);
-  //   Alert.alert(resBody.code === 1 ? 'Success!' : 'Failure!', resBody.msg);
-
-  // }
+  }
 
   return (
-
-
 
     <View style={styles.container}>
 
@@ -160,7 +147,10 @@ export default function AddClassBtn() {
             />)
           }
 
-          <Text>Duration: </Text>
+          <Text>Duration:
+            {endTimeInp.getHours() - startTimeInp.getHours() + ' hours '}
+            {endTimeInp.getMinutes() - startTimeInp.getMinutes() + ' minutes'}
+          </Text>
 
           <Text>Recurring Days?</Text>
           <Switch
@@ -170,27 +160,33 @@ export default function AddClassBtn() {
 
           {recurringInp
             ? (
-              <FlatList
-                data={daysActiveInp}
-                renderItem={({ item }) => (
-                  <View>
-                    <Text>{item.day}</Text>
-                    <Switch
-                      value={item.active}
-                      onValueChange={() => {
-                        setDaysActiveInp(daysActiveInp.filter((val, i) => {
-                          if (val.day === item.day) {
-                            val.active = val.active === true ? false : true;
-                            return val;
-                          }
-                          if (val.day != item.day) return val.day;
-                        }))
+              <View
+                style={styles.daysContainer}
+              >
+                <FlatList
+                  data={daysActiveInp}
+                  horizontal
+                  renderItem={({ item }) => (
+                    <View
+                      style={styles.daySwitchContainer}>
+                      <Text>{item.day}</Text>
+                      <Switch
+                        value={item.active}
+                        onValueChange={() => {
+                          setDaysActiveInp(daysActiveInp.filter((val, i) => {
+                            if (val.day === item.day) {
+                              val.active = val.active === true ? false : true;
+                              return val;
+                            }
+                            if (val.day != item.day) return val.day;
+                          }))
 
-                      }}
-                    />
-                  </View>
-                )}
-              />
+                        }}
+                      />
+                    </View>
+                  )}
+                />
+              </View>
             )
             : <Text></Text>}
 
@@ -198,7 +194,7 @@ export default function AddClassBtn() {
 
           <Button
             title='Add Class'
-          // onPress={addClassPress}
+            onPress={addClass}
           />
         </View>
       </Modal>
@@ -242,5 +238,23 @@ const styles = StyleSheet.create({
     height: 50,
     // color: 'green',
     display: 'flex'
+  },
+  daysContainer: {
+    backgroundColor: 'red',
+  },
+  daySwitchContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: 'green',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    padding: 5,
+    borderRadius: 5,
+  },
+  daySwitch: {
+    display: 'flex',
+    justifyContent: 'center',
   }
 });

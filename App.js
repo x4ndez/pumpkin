@@ -8,6 +8,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import ViewMembersScreen from './screens/ViewMembersScreen';
 import ViewWeekScreen from './screens/ViewWeekScreen';
 import AddWODScreen from './screens/AddWODScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 export default function App() {
 
@@ -37,6 +38,10 @@ export default function App() {
         <Stack.Screen
           name='Add WOD'
           component={AddWODScreen}
+        />
+        <Stack.Screen
+          name='Profile'
+          component={ProfileScreen}
         />
       </Stack.Navigator>
 

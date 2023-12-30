@@ -30,6 +30,9 @@ export default function LoginScreen({ navigation }) {
 
   }
 
+  // To be removed:
+  navigation.navigate('Dashboard')
+
   return (
 
     <View style={styles.container}>
