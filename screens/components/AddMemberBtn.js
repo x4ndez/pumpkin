@@ -35,9 +35,7 @@ export default function AddMemberBtn() {
 
   return (
 
-
-
-    <View style={styles.container}>
+    <View>
 
       <Modal
         visible={modalVisible}

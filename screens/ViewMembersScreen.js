@@ -17,10 +17,10 @@ export default function ViewMembersScreen({ navigation }) {
     readMembers();
   }, []);
 
-  // useEffect(() => {
-  //   if (!userData) return;
-  //   console.log(userData);
-  // }, [userData]);
+  useEffect(() => {
+    if (!userData) return;
+    console.log(userData);
+  }, [userData]);
 
   return (
 

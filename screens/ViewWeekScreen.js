@@ -2,12 +2,74 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
+import { getClasses } from '../helpers';
+import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
 
 export default function ViewWeekScreen() {
 
-  const currDate = new Date(Date.now());
+  const [weekArrayData, setWeekArrayData] = useState();
+  const [classesData, setClassesData] = useState();
 
-  console.log(currDate.toLocaleDateString())
+
+
+  const generateSchedule = async () => {
+    const currDate = new Date(Date.now());
+    const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currDayNo = currDate.getDay();
+    const weekArray = [];
+
+    const classes = await getClasses();
+    setClassesData(classes);
+    // console.log(classes);
+
+    for (let i = 0, day = currDate.getDay(); day <= 6; day++, i++) {
+
+      const dayDate = new Date(
+        currDate.setDate( // Use the value below to change the date based on the current date.
+          i === 0 ? currDate.getDate() : currDate.getDate() + 1 // Get the current day number, then add the additional day each iteration.
+        )
+      );
+
+      // console.log(weekDay[day])
+
+      const y = classes.filter((val) => {
+        for (let i = 0; i < val.daysActive.length; i++) {
+          // console.log(val.daysActive[i].day)
+          if (val.daysActive[i].day === weekDay[day]) return val;
+        }
+      });
+
+
+      // console.log('[start]')
+      // console.log(y);
+      // console.log('[stop]')
+
+      weekArray.push({
+        dayName: weekDay[day],
+        dayNo: day,
+        dateJSON: dayDate.toJSON(),
+        dateFormatted: dayDate.toLocaleDateString(),
+        classes: y,
+      })
+    }
+
+    setWeekArrayData(weekArray);
+
+
+  }
+
+  useEffect(() => {
+    generateSchedule();
+  }, []);
+
+  // useEffect(() => {
+  //   if (!weekArrayData) return;
+  //   console.log(`Date: ${new Date(weekArrayData[3].date)}`)
+  // }, [weekArrayData]);
+
+  // console.log(weekArray);
+
+  // console.log(tomorrowDate);
 
   // const [userData, setUserData] = useState();
 
@@ -25,19 +87,55 @@ export default function ViewWeekScreen() {
 
     <View style={styles.container}>
 
-      <Text>Monday</Text>
-      {/* {userData
-        ? <FlatList
-          data={userData}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-          (<View>
-            <Text>lol</Text>
-          </View>)
-          }
+      {classesData
+        &&
+
+        <FlatList
+          data={weekArrayData}
+          keyExtractor={item => item.dayNo}
+          renderItem={({ item }) => (
+            <View>
+              <View style={styles.dayContainer}>
+                <Text>{item.dayName}</Text>
+                <Text>{item.dateFormatted}</Text>
+              </View>
+
+              {item.classes.length > 0 ?
+                item.classes.map((val) => (
+                  <View style={styles.classContainer} key={val.id}>
+                    <Text>{val.className}</Text>
+                    <Text>{val.classType}</Text>
+                    <Text>Time: {startEndTimeFormat(val.startTime, val.endTime)}</Text>
+                    <Text>Duration: {getDuration(val.startTime, val.endTime)}</Text>
+                  </View>
+                ))
+                : (
+                  <View style={styles.classContainer}>
+                    <Text>No classes available.</Text>
+                  </View>
+                )
+              }
+
+              {/* <Text>{classesData[9].daysActive}</Text> */}
+              {/* {classesData.map((val) => {
+                // if (val.daysActive.day[item.dayName]) console.log('yes')
+                const daysComponents = [];
+                for (let i = 0; i < val.daysActive.length; i++) {
+                  if (val.daysActive[i].day === item.dayName) {
+                    daysComponents.push(<Text>{val.className}</Text>)
+                  }
+                }
+                console.log(daysComponents)
+              })} */}
+              {/* {console.log('[external startx]')}
+              {classesData.filter((val) => {
+                if(val.daysActive.length > 0) console.log(val)
+              })}
+              {console.log('[external stop]')} */}
+            </View>
+          )}
         />
-        : <Text>Loading...</Text>
-      } */}
+      }
 
     </View>
   );
@@ -61,5 +159,17 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginBottom: 5,
     width: '40%',
+  },
+  dayContainer: {
+    marginBottom: 10,
+    backgroundColor: 'pink',
+    padding: 10,
+    borderRadius: 5,
+  },
+  classContainer: {
+    marginBottom: 10,
+    backgroundColor: 'purple',
+    padding: 10,
+    borderRadius: 5,
   }
 });

@@ -24,16 +24,18 @@ export default function DashboardScreen({ navigation }) {
 
       <Text>Dashboard</Text>
 
-      <AddMemberBtn />
-      <ViewMembersBtn navigation={navigation} />
-      <AddClassBtn />
-      <AddWODBtn navigation={navigation} />
-      <Button
-        title='View Week'
-        onPress={() => {
-          navigation.navigate('View Week');
-        }}
-      />
+      <View>
+        <AddMemberBtn />
+        <ViewMembersBtn navigation={navigation} />
+        <AddClassBtn />
+        <AddWODBtn navigation={navigation} />
+        <Button
+          title='View Week'
+          onPress={() => {
+            navigation.navigate('View Week');
+          }}
+        />
+      </View>
 
     </View>
   );
@@ -41,10 +43,7 @@ export default function DashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   textInput: {
     backgroundColor: 'white',

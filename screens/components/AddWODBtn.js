@@ -10,9 +10,7 @@ export default function AddWODBtn({navigation}) {
 
   return (
 
-
-
-    <View style={styles.container}>
+    <View>
 
       <Button
         title='Add WOD'

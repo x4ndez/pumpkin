@@ -72,7 +72,7 @@ export default function AddClassBtn() {
 
   return (
 
-    <View style={styles.container}>
+    <View>
 
       <Modal
         visible={modalVisible}
@@ -86,7 +86,7 @@ export default function AddClassBtn() {
               // Clear all form elements
               setModalVisible(false);
               setClassNameInp();
-              setClassTypeInp();
+              setClassTypeInp(pickerOptions[0]);
               setRecurringInp(false);
               setDaysActiveInp(daysActiveInp.filter((val, i) => {
                 val.active = false;

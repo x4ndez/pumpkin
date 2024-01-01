@@ -8,7 +8,7 @@ export default function ViewMembersBtn({ navigation }) {
 
   return (
 
-    <View style={styles.container}>
+    <View>
 
       <Button
         title='View Members'

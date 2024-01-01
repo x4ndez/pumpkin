@@ -12,3 +12,18 @@ export const getSingleMember = async (memberId) => {
     return await res.json();
 
 }
+
+export const getClasses = async () => {
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    console.log('api call')
+
+    return await res.json();
+
+}
