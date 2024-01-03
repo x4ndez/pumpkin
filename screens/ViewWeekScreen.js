@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, FlatList, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
 import { getClasses } from '../helpers';
 import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
 
-export default function ViewWeekScreen() {
+export default function ViewWeekScreen({ navigation }) {
 
   const [weekArrayData, setWeekArrayData] = useState();
   const [classesData, setClassesData] = useState();
@@ -69,12 +69,18 @@ export default function ViewWeekScreen() {
 
               {item.classes.length > 0 ?
                 item.classes.map((val) => (
-                  <View style={styles.classContainer} key={val.id}>
+                  <Pressable
+                    style={styles.classContainer}
+                    key={val.id}
+                    onPress={() => navigation.navigate('Session', {
+                      classData: val,
+                    })}
+                  >
                     <Text>{val.className}</Text>
                     <Text>{val.classType}</Text>
                     <Text>Time: {startEndTimeFormat(val.startTime, val.endTime)}</Text>
                     <Text>Duration: {getDuration(val.startTime, val.endTime)}</Text>
-                  </View>
+                  </Pressable>
                 ))
                 : (
                   <View style={styles.classContainer}>

@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
   }
 
   // To be removed:
-  // navigation.navigate('Dashboard')
+  navigation.navigate('Dashboard')
 
   return (
 
