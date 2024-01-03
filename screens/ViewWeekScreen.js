@@ -10,8 +10,6 @@ export default function ViewWeekScreen() {
   const [weekArrayData, setWeekArrayData] = useState();
   const [classesData, setClassesData] = useState();
 
-
-
   const generateSchedule = async () => {
     const currDate = new Date(Date.now());
     const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -20,7 +18,6 @@ export default function ViewWeekScreen() {
 
     const classes = await getClasses();
     setClassesData(classes);
-    // console.log(classes);
 
     for (let i = 0, day = currDate.getDay(); day <= 6; day++, i++) {
 
@@ -30,19 +27,11 @@ export default function ViewWeekScreen() {
         )
       );
 
-      // console.log(weekDay[day])
-
       const y = classes.filter((val) => {
         for (let i = 0; i < val.daysActive.length; i++) {
-          // console.log(val.daysActive[i].day)
           if (val.daysActive[i].day === weekDay[day]) return val;
         }
       });
-
-
-      // console.log('[start]')
-      // console.log(y);
-      // console.log('[stop]')
 
       weekArray.push({
         dayName: weekDay[day],
@@ -55,33 +44,11 @@ export default function ViewWeekScreen() {
 
     setWeekArrayData(weekArray);
 
-
   }
 
   useEffect(() => {
     generateSchedule();
   }, []);
-
-  // useEffect(() => {
-  //   if (!weekArrayData) return;
-  //   console.log(`Date: ${new Date(weekArrayData[3].date)}`)
-  // }, [weekArrayData]);
-
-  // console.log(weekArray);
-
-  // console.log(tomorrowDate);
-
-  // const [userData, setUserData] = useState();
-
-  // const readMembers = async () => {
-  //   const data = await fetch(`http://${localhostUrl}:3000/api/users`);
-  //   const listData = await data.json();
-  //   setUserData(listData);
-  // }
-
-  // useEffect(() => {
-  //   readMembers();
-  // }, []);
 
   return (
 
@@ -116,22 +83,6 @@ export default function ViewWeekScreen() {
                 )
               }
 
-              {/* <Text>{classesData[9].daysActive}</Text> */}
-              {/* {classesData.map((val) => {
-                // if (val.daysActive.day[item.dayName]) console.log('yes')
-                const daysComponents = [];
-                for (let i = 0; i < val.daysActive.length; i++) {
-                  if (val.daysActive[i].day === item.dayName) {
-                    daysComponents.push(<Text>{val.className}</Text>)
-                  }
-                }
-                console.log(daysComponents)
-              })} */}
-              {/* {console.log('[external startx]')}
-              {classesData.filter((val) => {
-                if(val.daysActive.length > 0) console.log(val)
-              })}
-              {console.log('[external stop]')} */}
             </View>
           )}
         />

@@ -22,8 +22,6 @@ export const getClasses = async () => {
         },
     });
 
-    console.log('api call')
-
     return await res.json();
 
 }
