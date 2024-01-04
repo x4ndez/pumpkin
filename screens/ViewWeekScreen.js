@@ -62,17 +62,19 @@ export default function ViewWeekScreen({ navigation }) {
           keyExtractor={item => item.dayNo}
           renderItem={({ item }) => (
             <View>
-              <View style={styles.dayContainer}>
+              <View style={[styles.dayContainer, styles.flexStartCenterRow, styles.flexRow]}>
                 <Text
-                  style={[styles.h1]}
+                  style={[styles.h3Bold, styles.dayText]}
                 >{item.dayName}</Text>
-                <Text>{item.dateFormatted}</Text>
+                <Text
+                  style={[styles.subText, styles.dayDateText]}
+                >{item.dateFormatted}</Text>
               </View>
 
               {item.classes.length > 0 ?
                 item.classes.map((val) => (
                   <Pressable
-                    style={[styles.classContainer, styles.flexStartCenter]}
+                    style={[styles.classContainer, styles.flexRow, styles.flexStartCenterRow]}
                     key={val.id}
                     onPress={() => navigation.navigate('Session', {
                       classData: val,
@@ -80,30 +82,41 @@ export default function ViewWeekScreen({ navigation }) {
                     })}
                   >
 
-                    {/* CLASS TITLE */}
-                    <Text
-                      style={[styles.genericText, styles.h2]}
-                    >{val.className}</Text>
+                    <View
+                      style={styles.classMarker}
+                    ></View>
 
                     <View
-                      style={[styles.flexStartCenter, styles.flexRow]}
+                      style={styles.flexStartCenter}
                     >
 
-                      {/* CLASS TIME */}
+                      {/* CLASS TITLE */}
                       <Text
                         style={[styles.genericText, styles.h2]}
-                      >{startEndTimeFormat(val.startTime, val.endTime)}</Text>
+                      >{val.className}</Text>
 
-                      {/* CLASS TYPE */}
+                      <View
+                        style={[styles.flexStartCenter, styles.flexRow]}
+                      >
+
+                        {/* CLASS TIME */}
+                        <Text
+                          style={[styles.genericText, styles.h2]}
+                        >{startEndTimeFormat(val.startTime, val.endTime)}</Text>
+
+                        {/* CLASS TYPE */}
+                        <Text
+                          style={[styles.classType]}>{val.classType}</Text>
+
+                      </View>
+
+                      {/* CLASS DURATION */}
                       <Text
-                        style={[styles.classType]}>{val.classType}</Text>
+                        style={[styles.subText]}
+                      >{getDuration(val.startTime, val.endTime)}</Text>
 
                     </View>
 
-                    {/* CLASS DURATION */}
-                    <Text
-                      style={[styles.subText]}
-                    >{getDuration(val.startTime, val.endTime)}</Text>
                   </Pressable>
                 ))
                 : (
@@ -139,11 +152,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
+  h3Bold: {
+    fontWeight: 'bold',
+  },
+  dayText: {
+    color: 'white',
+    margin: 5,
+  },
+  dayDateText: {
+    marginLeft: 20,
+  },
   classType: {
     fontSize: 12,
     backgroundColor: '#FFCC80',
     borderRadius: 5,
-    padding: 5,
+    padding: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
     marginLeft: 10,
     color: '#424242',
   },
@@ -152,23 +177,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#212121',
   },
   dayContainer: {
-    marginBottom: 10,
-    backgroundColor: 'white',
-    padding: 10,
+    backgroundColor: '#424242',
+    width: '100%',
     borderRadius: 5,
+    paddingLeft: 10,
   },
   classContainer: {
-    marginBottom: 10,
-    // backgroundColor: 'purple',
-    padding: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
     borderBottomColor: '#616161',
     borderBottomWidth: 0.5,
+  },
+  classMarker: {
+    width: 8,
+    height: '100%',
+    backgroundColor: '#B2BABB',
+    marginRight: 20,
+    borderRadius: 5,
   },
 
   flexStartCenter: {
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
+  },
+  flexStartCenterRow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   flexRow: {
     flexDirection: 'row',
