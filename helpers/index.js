@@ -25,3 +25,16 @@ export const getClasses = async () => {
     return await res.json();
 
 }
+
+export const getSessionFromClass = async (classId, date) => {
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes/session/${classId}.${date}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    return await res.json();
+
+}

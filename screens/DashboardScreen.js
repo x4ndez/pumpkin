@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
 import AddMemberBtn from './components/AddMemberBtn';
 import ViewMembersBtn from './components/ViewMembersBtn';
@@ -16,7 +16,18 @@ import AddWODBtn from './components/AddWODBtn';
 
 export default function DashboardScreen({ navigation }) {
 
-
+  const adminTools = [
+    <AddMemberBtn />,
+    <ViewMembersBtn navigation={navigation} />,
+    <AddClassBtn />,
+    <AddWODBtn navigation={navigation} />,
+    <Button
+      title='View Week'
+      onPress={() => {
+        navigation.navigate('View Week');
+      }}
+    />,
+  ]
 
   return (
 
@@ -24,7 +35,27 @@ export default function DashboardScreen({ navigation }) {
 
       <Text>Dashboard</Text>
 
-      <View>
+      <ScrollView
+        horizontal
+        style={[styles.adminTools]}
+      >
+
+        <AddMemberBtn />
+        <ViewMembersBtn navigation={navigation} />
+        <AddClassBtn />
+        <AddWODBtn navigation={navigation} />
+
+
+      </ScrollView>
+
+      <Button
+        title='View Week'
+        onPress={() => {
+          navigation.navigate('View Week');
+        }}
+      />
+
+      {/* <View>
         <AddMemberBtn />
         <ViewMembersBtn navigation={navigation} />
         <AddClassBtn />
@@ -35,7 +66,7 @@ export default function DashboardScreen({ navigation }) {
             navigation.navigate('View Week');
           }}
         />
-      </View>
+      </View> */}
 
     </View>
   );
@@ -56,5 +87,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginBottom: 5,
     width: '40%',
-  }
+  },
+  adminTools: {
+    width: '100%',
+    height: 100,
+  },
 });

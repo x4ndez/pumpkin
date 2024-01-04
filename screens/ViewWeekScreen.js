@@ -63,28 +63,54 @@ export default function ViewWeekScreen({ navigation }) {
           renderItem={({ item }) => (
             <View>
               <View style={styles.dayContainer}>
-                <Text>{item.dayName}</Text>
+                <Text
+                  style={[styles.h1]}
+                >{item.dayName}</Text>
                 <Text>{item.dateFormatted}</Text>
               </View>
 
               {item.classes.length > 0 ?
                 item.classes.map((val) => (
                   <Pressable
-                    style={styles.classContainer}
+                    style={[styles.classContainer, styles.flexStartCenter]}
                     key={val.id}
                     onPress={() => navigation.navigate('Session', {
                       classData: val,
+                      dateData: item,
                     })}
                   >
-                    <Text>{val.className}</Text>
-                    <Text>{val.classType}</Text>
-                    <Text>Time: {startEndTimeFormat(val.startTime, val.endTime)}</Text>
-                    <Text>Duration: {getDuration(val.startTime, val.endTime)}</Text>
+
+                    {/* CLASS TITLE */}
+                    <Text
+                      style={[styles.genericText, styles.h2]}
+                    >{val.className}</Text>
+
+                    <View
+                      style={[styles.flexStartCenter, styles.flexRow]}
+                    >
+
+                      {/* CLASS TIME */}
+                      <Text
+                        style={[styles.genericText, styles.h2]}
+                      >{startEndTimeFormat(val.startTime, val.endTime)}</Text>
+
+                      {/* CLASS TYPE */}
+                      <Text
+                        style={[styles.classType]}>{val.classType}</Text>
+
+                    </View>
+
+                    {/* CLASS DURATION */}
+                    <Text
+                      style={[styles.subText]}
+                    >{getDuration(val.startTime, val.endTime)}</Text>
                   </Pressable>
                 ))
                 : (
-                  <View style={styles.classContainer}>
-                    <Text>No classes available.</Text>
+                  <View style={[styles.classContainer]}>
+                    <Text
+                      style={[styles.genericText]}
+                    >No classes available.</Text>
                   </View>
                 )
               }
@@ -99,34 +125,52 @@ export default function ViewWeekScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  genericText: {
+    color: '#E0E0E0',
   },
-  textInput: {
-    backgroundColor: 'white',
-    borderColor: 'grey',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
+  subText: {
+    color: '#757575',
+  },
+  h1: {
+    fontSize: 24,
     marginBottom: 5,
-    width: '40%',
+  },
+  h2: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  classType: {
+    fontSize: 12,
+    backgroundColor: '#FFCC80',
+    borderRadius: 5,
+    padding: 5,
+    marginLeft: 10,
+    color: '#424242',
+  },
+  container: {
+    padding: 10,
+    backgroundColor: '#212121',
   },
   dayContainer: {
     marginBottom: 10,
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
   },
   classContainer: {
     marginBottom: 10,
-    backgroundColor: 'purple',
+    // backgroundColor: 'purple',
     padding: 10,
-    borderRadius: 5,
-  }
+    borderBottomColor: '#616161',
+    borderBottomWidth: 0.5,
+  },
+
+  flexStartCenter: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  flexRow: {
+    flexDirection: 'row',
+  },
 });
