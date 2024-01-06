@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, FlatList, Alert, Vibration } from 'react-native';
 import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
 import { deleteUser } from '../helpers';
@@ -32,9 +32,25 @@ export default function ViewMembersScreen({ navigation }) {
             <Text>{item.name}</Text>
             <Button
               title='X'
-              onPress={async () => {
-                const user = await deleteUser(item.id);
-                readMembers();
+              onPress={() => {
+                Vibration.vibrate();
+                Alert.alert('Confirm',
+                  'Are you sure you want to delete this user?',
+                  [{
+                    text: 'Cancel', onPress: () => {
+                      return;
+                    },
+                  },
+                  {
+                    text: 'Delete User', onPress: async () => {
+                      const user = await deleteUser(item.id);
+                      if (user.code === 1) {
+                        readMembers();
+                      } else {
+                        Alert.alert('Error', user.msg)
+                      }
+                    },
+                  }])
               }}
             />
             <Button
