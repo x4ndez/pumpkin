@@ -82,7 +82,8 @@ export default function DashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-
+    backgroundColor: '#212121',
+    height: '100%'
   },
   textInput: {
     backgroundColor: 'white',
