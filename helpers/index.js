@@ -80,19 +80,29 @@ export const unattendSession = async (memberId, sessionId, attendeeId) => {
 
 export const getAttendees = async (sessionId) => {
 
-    // console.log(attendeesListObj)
-
-    // const attendeesListId = attendeesListObj.map((val) => val.userId);
-
-    // const payload = {
-    //     attendeesId: attendeesListId,
-    // }
-
     const res = await fetch(`http://${localhostUrl}:3000/api/classes/session/attendees/${sessionId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
+    });
+
+    return await res.json();
+
+}
+
+export const deleteUser = async (userId) => {
+
+    const payload = {
+        userId: userId,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/users`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
     });
 
     return await res.json();

@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
+import { deleteUser } from '../helpers';
 
 export default function ViewMembersScreen({ navigation }) {
 
@@ -17,11 +18,6 @@ export default function ViewMembersScreen({ navigation }) {
     readMembers();
   }, []);
 
-  useEffect(() => {
-    if (!userData) return;
-    console.log(userData);
-  }, [userData]);
-
   return (
 
     <View style={styles.container}>
@@ -36,7 +32,10 @@ export default function ViewMembersScreen({ navigation }) {
             <Text>{item.name}</Text>
             <Button
               title='X'
-
+              onPress={async () => {
+                const user = await deleteUser(item.id);
+                readMembers();
+              }}
             />
             <Button
               title='Info'
