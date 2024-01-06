@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Linking, Alert } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from './context';
 import { localhostUrl } from '../config';
 
 export default function LoginScreen({ navigation }) {
 
   const [emailInp, onChangeEmailInp] = useState();
   const [passwordInp, onChangePasswordInp] = useState();
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   async function loginPress() {
 
@@ -25,13 +27,16 @@ export default function LoginScreen({ navigation }) {
 
     const resBody = await res.json();
 
-    if (resBody.code === 1) navigation.navigate('Dashboard');
+    if (resBody.code === 1) {
+      setCurrentUser(resBody.data);
+      navigation.navigate('Dashboard');
+    }
     else Alert.alert('Error', `${resBody.msg}`);
 
   }
 
   // To be removed:
-  navigation.navigate('Dashboard')
+  // navigation.navigate('Dashboard')
 
   return (
 

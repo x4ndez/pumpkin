@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     backgroundColor: '#212121',
+    height: '100%'
   },
   dayContainer: {
     backgroundColor: '#424242',

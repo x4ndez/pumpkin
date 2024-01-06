@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from './context';
 import AddMemberBtn from './components/AddMemberBtn';
 import ViewMembersBtn from './components/ViewMembersBtn';
 import AddClassBtn from './components/AddClassBtn';
@@ -15,6 +16,8 @@ import AddWODBtn from './components/AddWODBtn';
 // View Week
 
 export default function DashboardScreen({ navigation }) {
+
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const adminTools = [
     <AddMemberBtn />,
@@ -48,12 +51,17 @@ export default function DashboardScreen({ navigation }) {
 
       </ScrollView>
 
+      <Text>BUTTON: Today's WOD</Text>
+
       <Button
         title='View Week'
         onPress={() => {
           navigation.navigate('View Week');
         }}
       />
+
+      <Text>ADMIN: Make an announcement</Text>
+      <Text>USER: Show announcements</Text>
 
       {/* <View>
         <AddMemberBtn />

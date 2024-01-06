@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Linking, Alert } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from './context';
 import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
 import { getSessionFromClass } from '../helpers';
 
 export default function SessionScreen({ route, navigation }) {
 
   const [sessionData, setSessionData] = useState();
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const classData = route.params.classData;
   const dateData = route.params.dateData;
