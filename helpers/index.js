@@ -38,3 +38,63 @@ export const getSessionFromClass = async (classId, date) => {
     return await res.json();
 
 }
+
+export const attendSession = async (memberId, sessionId) => {
+
+    const payload = {
+        memberId: memberId,
+        sessionId: sessionId,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes/session/attendees`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
+
+export const unattendSession = async (memberId, sessionId, attendeeId) => {
+
+    const payload = {
+        memberId: memberId,
+        sessionId: sessionId,
+        attendeeId: attendeeId,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes/session/attendees`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
+
+export const getAttendees = async (sessionId) => {
+
+    // console.log(attendeesListObj)
+
+    // const attendeesListId = attendeesListObj.map((val) => val.userId);
+
+    // const payload = {
+    //     attendeesId: attendeesListId,
+    // }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes/session/attendees/${sessionId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    return await res.json();
+
+}

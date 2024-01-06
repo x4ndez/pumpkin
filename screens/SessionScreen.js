@@ -1,13 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, Alert, FlatList } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
-import { getSessionFromClass } from '../helpers';
+import { getSessionFromClass, attendSession, unattendSession, getAttendees } from '../helpers';
 
 export default function SessionScreen({ route, navigation }) {
 
   const [sessionData, setSessionData] = useState();
+  const [attendeeData, setAttendeeData] = useState();
+  const [attendStatus, setAttendStatus] = useState({
+    status: false,
+  });
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const classData = route.params.classData;
@@ -18,12 +22,21 @@ export default function SessionScreen({ route, navigation }) {
       classData.id,
       new Date(dateData.dateJSON),
     );
-    console.log(data);
+    const dataAttendees = await getAttendees(data.id);
+    setAttendeeData(dataAttendees);
+    setSessionData(data);
+
+    for (let item of data.attendees) {
+      if (item.userId === currentUser.id) setAttendStatus({
+        status: true,
+        attendeeId: item.id,
+      })
+    }
+
   }
 
   useEffect(() => {
     onLoad();
-    // console.log(typeof classData.id)
   }, []);
 
   return (
@@ -38,16 +51,75 @@ export default function SessionScreen({ route, navigation }) {
         <Text>Duration: {getDuration(classData.startTime, classData.endTime)}</Text>
       </View>
 
-      <View>
-        <Button
-          title='Attend'
-        />
-      </View>
+      {sessionData && attendeeData
+        ? (<>
 
-      <View>
-        {/* To be a flatlist of attendees */}
-        <Text>Attendees</Text>
-      </View>
+          <View>
+            {attendStatus.status
+              ? <Button
+                title='Unattend'
+                onPress={async () => {
+                  const res = await unattendSession(
+                    currentUser.id,
+                    sessionData.id,
+                    attendStatus.attendeeId
+                  )
+                  if (res.code === 1) {
+                    const update = await getAttendees(sessionData.id);
+                    setAttendeeData(update);
+                    setAttendStatus({ status: false })
+                  } else {
+                    Alert.alert('Error:', res.msg)
+                  }
+
+                }}
+              />
+              : <Button
+                title='Attend'
+                onPress={async () => {
+                  const res = await attendSession(
+                    currentUser.id,
+                    sessionData.id
+                  )
+                  if (res.code === 1) {
+                    const update = await getAttendees(sessionData.id);
+                    setAttendeeData(update);
+                    setAttendStatus({
+                      status: true,
+                      attendeeId: res.data.id,
+                    });
+                  } else {
+                    Alert.alert('Error:', res.msg)
+                  }
+                }}
+              />
+            }
+
+
+          </View>
+
+          <View>
+            {/* To be a flatlist of attendees */}
+            <Text>Attendees</Text>
+
+            <FlatList
+              data={attendeeData}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <Button
+                  title={item.name}
+                  onPress={() => {
+                    navigation.navigate('Profile', {
+                      memberId: item.id,
+                    })
+                  }}
+                />
+              )}
+            />
+          </View>
+
+        </>)
+        : <Text>Loading...</Text>}
 
       <View>
         {/* WOD to be assigned to day */}
@@ -60,10 +132,7 @@ export default function SessionScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   textInput: {
     backgroundColor: 'white',
