@@ -3,26 +3,29 @@ import { StyleSheet, Text, View, TextInput, Button, Linking, Alert, FlatList } f
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
-import { getSessionFromClass, attendSession, unattendSession, getAttendees } from '../helpers';
+import { getSessionFromClass, attendSession, unattendSession, getAttendees, getWodsFromDate } from '../helpers';
 
 export default function SessionScreen({ route, navigation }) {
 
   const [sessionData, setSessionData] = useState();
   const [attendeeData, setAttendeeData] = useState();
+  const [wodsData, setWodsData] = useState();
   const [attendStatus, setAttendStatus] = useState({
     status: false,
   });
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
-  const classData = route.params.classData;
-  const dateData = route.params.dateData;
+  const classData = route.params.classData; // Class data this session is associated with
+  const dateData = route.params.dateData; // Date info regarding this session
 
   const onLoad = async () => {
+    const wods = await getWodsFromDate(dateData.dateJSON);
     const data = await getSessionFromClass(
       classData.id,
       new Date(dateData.dateJSON),
     );
     const dataAttendees = await getAttendees(data.id);
+    setWodsData(wods.data);
     setAttendeeData(dataAttendees);
     setSessionData(data);
 
@@ -121,12 +124,33 @@ export default function SessionScreen({ route, navigation }) {
         </>)
         : <Text>Loading...</Text>}
 
-      <View>
-        {/* WOD to be assigned to day */}
-        <Text>Workout of the Day</Text>
-      </View>
+      {wodsData
+        ?
+        <View>
+          <Text>Workout of the Day</Text>
+          {wodsData.length > 0
+            ? <FlatList
+              data={wodsData}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <View
+                  style={styles.wodContainer}
+                >
 
-    </View>
+                  <Text>{item.name}</Text>
+                  <Text>{item.content}</Text>
+
+                </View>
+              )}
+            />
+            : <Text>No workout assigned yet.</Text>
+          }
+        </View >
+        :
+        <Text>Loading...</Text>
+      }
+
+    </View >
   );
 }
 
@@ -145,5 +169,14 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginBottom: 5,
     width: '40%',
+  },
+  wodContainer: {
+    backgroundColor: 'red',
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 10,
+    borderRadius: 5,
   }
 });

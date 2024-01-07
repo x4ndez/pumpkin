@@ -108,3 +108,16 @@ export const deleteUser = async (userId) => {
     return await res.json();
 
 }
+
+export const getWodsFromDate = async (dateOf) => {
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/wod/${dateOf}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    return await res.json();
+
+}
