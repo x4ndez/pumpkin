@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// session model to be linked to class with foreign key
+// when user clicks on the class, front end will pass date and search through class sessions.
+// sessions will be regenerated every 2 weeks
+
+model Class {
+  id         Int          @id @default(autoincrement())
+  className  String?
+  classType  String
+  startTime  DateTime
+  endTime    DateTime
+  date       DateTime
+  recurring  Boolean
+  daysActive DaysActive[]
+  sessions   Session[]
+  createdAt  DateTime     @default(now())
+  //make functions:
+  // duration (end hours and minutes - start hours and minutes)
+}
+
+model Session {
+  id        Int         @id @default(autoincrement())
+  date      DateTime
+  attendees Attendees[]
+  Class     Class?      @relation(fields: [classId], references: [id])
+  classId   Int?
+}
+
+model Attendees {
+  id        Int      @id @default(autoincrement())
+  Session   Session? @relation(fields: [sessionId], references: [id])
+  sessionId Int?
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+}
+
+model DaysActive {
+  id      Int    @id @default(autoincrement())
+  day     String
+  class   Class  @relation(fields: [classId], references: [id])
+  classId Int
+}
+
+// className: classNameInp,
+//       startTime: startTimeInp,
+//       endTime: endTimeInp,
+//       dateOf: dateInp,
+//       recurring: recurringInp,
+//       daysActive: daysActiveInp,
+
+model WOD {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  date      DateTime
+  content   String?
+  type      String?
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
+  name          String
+  password      String
+  classesBooked Int         @default(0)
+  bio           String?
+  proficiency   String?     @default("Newbie")
+  permissions   String      @default("user")
+  accountActive Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  attendeeOf    Attendees[]
+}
