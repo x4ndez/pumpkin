@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
 import { getClasses } from '../helpers';
 import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
+import SelectClass from './components/SelectClass';
 
 export default function ViewWeekScreen({ navigation }) {
 
@@ -72,52 +73,24 @@ export default function ViewWeekScreen({ navigation }) {
               </View>
 
               {item.classes.length > 0 ?
-                item.classes.map((val) => (
+
+                item.classes.map((val, i) => (
+
                   <Pressable
-                    style={[styles.classContainer, styles.flexRow, styles.flexStartCenterRow]}
                     key={val.id}
                     onPress={() => navigation.navigate('Session', {
                       classData: val,
                       dateData: item,
                     })}
                   >
-
-                    <View
-                      style={styles.classMarker}
-                    ></View>
-
-                    <View
-                      style={styles.flexStartCenter}
-                    >
-
-                      {/* CLASS TITLE */}
-                      <Text
-                        style={[styles.genericText, styles.h2]}
-                      >{val.className}</Text>
-
-                      <View
-                        style={[styles.flexStartCenter, styles.flexRow]}
-                      >
-
-                        {/* CLASS TIME */}
-                        <Text
-                          style={[styles.genericText, styles.h2]}
-                        >{startEndTimeFormat(val.startTime, val.endTime)}</Text>
-
-                        {/* CLASS TYPE */}
-                        <Text
-                          style={[styles.classType]}>{val.classType}</Text>
-
-                      </View>
-
-                      {/* CLASS DURATION */}
-                      <Text
-                        style={[styles.subText]}
-                      >{getDuration(val.startTime, val.endTime)}</Text>
-
-                    </View>
-
+                    {/* PRESSABLE INDIVIDUAL CLASS */}
+                    <SelectClass
+                      key={i}
+                      props={{
+                        val: val,
+                      }} />
                   </Pressable>
+
                 ))
                 : (
                   <View style={[styles.classContainer]}>
