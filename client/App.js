@@ -33,6 +33,7 @@ export default function App() {
             headerTitle: 'Pumpkin',
             headerShadowVisible: false,
             headerStyle: styles.header,
+            headerTintColor: 'white'
           }}
         >
           <Stack.Screen
@@ -48,7 +49,7 @@ export default function App() {
             options={{
               headerShown: true,
               headerBackVisible: false,
-              
+
               headerRight: () => (
                 <ProfileButton />),
             }}
@@ -90,6 +91,6 @@ const styles = StyleSheet.create({
   },
   header: {
     // NOTE: Will only accept backgroundColor
-    backgroundColor: '#424242',
-  }
+    backgroundColor: '#292929',
+  },
 });

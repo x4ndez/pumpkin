@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
     marginRight: 20,
     borderRadius: 5,
   },
-
   flexStartCenter: {
     display: 'flex',
     alignItems: 'flex-start',

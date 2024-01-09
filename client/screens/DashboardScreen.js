@@ -6,6 +6,7 @@ import AddMemberBtn from './components/AddMemberBtn';
 import ViewMembersBtn from './components/ViewMembersBtn';
 import AddClassBtn from './components/AddClassBtn';
 import AddWODBtn from './components/AddWODBtn';
+import SubHeading from './components/subHeading';
 
 // x Add Member
 // Add WOD 
@@ -36,7 +37,11 @@ export default function DashboardScreen({ navigation }) {
 
     <View style={styles.container}>
 
-      <Text>Dashboard</Text>
+      <SubHeading
+        props={{
+        title: 'Admin Tools'
+      }}
+      />
 
       <ScrollView
         horizontal

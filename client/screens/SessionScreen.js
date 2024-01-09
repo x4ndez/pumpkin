@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking, Alert, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, Alert, FlatList, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
 import { getSessionFromClass, attendSession, unattendSession, getAttendees, getWodsFromDate } from '../helpers';
 import { style } from './styles';
 import SelectClass from './components/SelectClass';
+import SubHeading from './components/subHeading';
+import WodItem from './components/WodItem';
 
 export default function SessionScreen({ route, navigation }) {
 
@@ -46,139 +48,139 @@ export default function SessionScreen({ route, navigation }) {
 
   return (
 
-    <View style={styles.container}>
-
-        <SelectClass
-          props={{
-            val: classData,
-          }}
-        />
-
-        {sessionData && attendeeData
-          ? (<>
-
-            <View>
-              {attendStatus.status
-                ? <Button
-                  title='Unattend'
-                  onPress={async () => {
-                    const res = await unattendSession(
-                      currentUser.id,
-                      sessionData.id,
-                      attendStatus.attendeeId
-                    )
-                    if (res.code === 1) {
-                      const update = await getAttendees(sessionData.id);
-                      setAttendeeData(update);
-                      setAttendStatus({ status: false })
-                    } else {
-                      Alert.alert('Error:', res.msg)
-                    }
-
-                  }}
-                />
-                : <Button
-                  title='Attend'
-                  onPress={async () => {
-                    const res = await attendSession(
-                      currentUser.id,
-                      sessionData.id
-                    )
-                    if (res.code === 1) {
-                      const update = await getAttendees(sessionData.id);
-                      setAttendeeData(update);
-                      setAttendStatus({
-                        status: true,
-                        attendeeId: res.data.id,
-                      });
-                    } else {
-                      Alert.alert('Error:', res.msg)
-                    }
-                  }}
-                />
-              }
+    <View style={[styles.container]}>
 
 
-            </View>
 
-            <View>
-              {/* To be a flatlist of attendees */}
-              <Text>Attendees</Text>
+      <SelectClass
+        props={{
+          val: classData,
+        }}
+      />
 
-              <FlatList
-                data={attendeeData}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                  <Button
-                    title={item.name}
+
+      {sessionData && attendeeData
+        ? (<>
+
+          {attendStatus.status
+            ? <Button
+              title='Unattend'
+              onPress={async () => {
+                const res = await unattendSession(
+                  currentUser.id,
+                  sessionData.id,
+                  attendStatus.attendeeId
+                )
+                if (res.code === 1) {
+                  const update = await getAttendees(sessionData.id);
+                  setAttendeeData(update);
+                  setAttendStatus({ status: false })
+                } else {
+                  Alert.alert('Error:', res.msg)
+                }
+
+              }}
+            />
+            : <Button
+              title='Attend'
+              onPress={async () => {
+                const res = await attendSession(
+                  currentUser.id,
+                  sessionData.id
+                )
+                if (res.code === 1) {
+                  const update = await getAttendees(sessionData.id);
+                  setAttendeeData(update);
+                  setAttendStatus({
+                    status: true,
+                    attendeeId: res.data.id,
+                  });
+                } else {
+                  Alert.alert('Error:', res.msg)
+                }
+              }}
+            />
+          }
+          {/* To be a flatlist of attendees */}
+
+          <SubHeading
+            props={{ title: 'Attendees' }}
+          />
+
+          <View
+            style={style.attendeeListContainer}
+          >
+
+            <FlatList
+              data={attendeeData}
+              horizontal={true}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <View
+                  style={[style.attendeeContainer]}
+                >
+                  <TouchableOpacity
+                    style={[style.flexCenterCenterRow]}
                     onPress={() => {
                       navigation.navigate('Profile', {
                         memberId: item.id,
                       })
                     }}
-                  />
-                )}
-              />
-            </View>
-
-          </>)
-          : <Text>Loading...</Text>}
-
-        {wodsData
-          ?
-          <View>
-            <Text>Workout of the Day</Text>
-            {wodsData.length > 0
-              ? <FlatList
-                data={wodsData}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                  <View
-                    style={styles.wodContainer}
                   >
 
-                    <Text>{item.name}</Text>
-                    <Text>{item.content}</Text>
+                    <View
+                      style={[style.attendeeListed]}
+                    ><Text>?</Text></View>
+                    <Text style={[style.genericText]}>{item.name}</Text>
 
-                  </View>
-                )}
-              />
-              : <Text>No workout assigned yet.</Text>
-            }
-          </View >
-          :
-          <Text>Loading...</Text>
-        }
+                  </TouchableOpacity>
+                </View>
 
-      </View >
-      );
+              )}
+            />
+
+          </View>
+        </>)
+        : <Text>Loading...</Text>}
+
+      {wodsData
+        ?
+        <View>
+          <SubHeading
+            props={{ title: 'Workout of the Day' }}
+          />
+          {wodsData.length > 0
+            ? <FlatList
+              data={wodsData}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+
+                <WodItem
+                  props={{
+                    item: item,
+                  }}
+                />
+
+              )}
+            />
+            : <WodItem props={{ item: null }} />
+          }
+        </View >
+        :
+        <Text>Loading...</Text>
+      }
+
+
+
+    </View >
+  );
 }
 
-      const styles = StyleSheet.create({
-        container: {
-        padding: 10,
-      backgroundColor: '#212121',
-      height: '100%'
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    backgroundColor: '#212121',
+    height: '100%',
+    width: '100%',
   },
-      textInput: {
-        backgroundColor: 'white',
-      borderColor: 'grey',
-      borderWidth: 1,
-      borderRadius: 5,
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 5,
-      paddingBottom: 5,
-      marginBottom: 5,
-      width: '40%',
-  },
-      wodContainer: {
-        backgroundColor: 'red',
-      marginLeft: 10,
-      marginRight: 10,
-      marginTop: 5,
-      marginBottom: 5,
-      padding: 10,
-      borderRadius: 5,
-  }
 });

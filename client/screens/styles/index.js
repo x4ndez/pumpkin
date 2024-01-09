@@ -18,6 +18,20 @@ export const style = StyleSheet.create({
     h3Bold: {
         fontWeight: 'bold',
     },
+    h3: {
+        marginBottom: 5,
+    },
+    featureHeading: {
+        color: '#E0E0E0',
+        backgroundColor: '#424242',
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 2,
+        paddingBottom: 2,
+    },
     dayText: {
         color: 'white',
         margin: 5,
@@ -59,7 +73,6 @@ export const style = StyleSheet.create({
         marginRight: 20,
         borderRadius: 5,
     },
-
     flexStartCenter: {
         display: 'flex',
         alignItems: 'flex-start',
@@ -70,7 +83,64 @@ export const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
+    flexCenterCenterRow: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     flexRow: {
         flexDirection: 'row',
+    },
+    textInput: {
+        backgroundColor: 'white',
+        borderColor: 'grey',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginBottom: 5,
+        width: '40%',
+    },
+    wodContainer: {
+        backgroundColor: 'red',
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 5,
+        marginBottom: 5,
+        padding: 10,
+        borderRadius: 5,
+    },
+    attendeeListContainer: {
+        width: '100%',
+        backgroundColor: '#292929',
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginBottom: 10,
+        borderRadius: 10,
+    },
+    attendeeContainer: {
+        // backgroundColor: 'red',
+        paddingRight: 20,
+        maxWidth: 70,
+        // height: 80
+    },
+    attendeeListed: {
+        height: 50,
+        width: 50,
+        backgroundColor: 'pink',
+        borderRadius: 5,
+        marginBottom: 5,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    flex: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
     },
 });
