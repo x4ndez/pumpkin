@@ -7,18 +7,31 @@ import ViewMembersBtn from './components/ViewMembersBtn';
 import AddClassBtn from './components/AddClassBtn';
 import AddWODBtn from './components/AddWODBtn';
 import SubHeading from './components/subHeading';
+import { style } from './styles';
+import { getWodsFromDate } from '../helpers';
+import WodItem from './components/WodItem';
 
-// x Add Member
-// Add WOD 
-// Add Class
-
-// x View Members
-// View Calendar
-// View Week
+// update wod
+// update profile
+// update class
 
 export default function DashboardScreen({ navigation }) {
 
+  const [wodsData, setWodsData] = useState();
   const { currentUser, setCurrentUser } = useContext(UserContext);
+
+  const onLoad = async () => {
+
+    const wods = await getWodsFromDate(new Date(Date.now()));
+    setWodsData(wods.data);
+
+  }
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  console.log(currentUser)
 
   const adminTools = [
     <AddMemberBtn />,
@@ -37,26 +50,57 @@ export default function DashboardScreen({ navigation }) {
 
     <View style={styles.container}>
 
-      <SubHeading
-        props={{
-        title: 'Admin Tools'
-      }}
-      />
+      {currentUser.permissions === 'admin' &&
+        <View>
+          <SubHeading
+            props={{
+              title: 'Admin Tools'
+            }}
+          />
 
-      <ScrollView
-        horizontal
-        style={[styles.adminTools]}
-      >
+          <View>
+            <ScrollView
+              horizontal
+              style={[styles.adminTools]}
+            >
 
-        <AddMemberBtn />
-        <ViewMembersBtn navigation={navigation} />
-        <AddClassBtn />
-        <AddWODBtn navigation={navigation} />
+              <AddMemberBtn />
+              <ViewMembersBtn navigation={navigation} />
+              <AddClassBtn />
+              <AddWODBtn navigation={navigation} />
 
 
-      </ScrollView>
+            </ScrollView>
+          </View>
+        </View>
+      }
 
-      <Text>BUTTON: Today's WOD</Text>
+      {wodsData
+        ?
+        <View>
+          <SubHeading
+            props={{ title: 'Workout of the Day' }}
+          />
+          {wodsData.length > 0
+            ? <FlatList
+              data={wodsData}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+
+                <WodItem
+                  props={{
+                    item: item,
+                  }}
+                />
+
+              )}
+            />
+            : <WodItem props={{ item: null }} />
+          }
+        </View >
+        :
+        <Text>Loading...</Text>
+      }
 
       <Button
         title='View Week'
@@ -65,8 +109,11 @@ export default function DashboardScreen({ navigation }) {
         }}
       />
 
-      <Text>ADMIN: Make an announcement</Text>
-      <Text>USER: Show announcements</Text>
+      <SubHeading
+        props={{
+          title: 'Announcements'
+        }}
+      />
 
       {/* <View>
         <AddMemberBtn />
@@ -88,7 +135,10 @@ export default function DashboardScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#212121',
-    height: '100%'
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    padding: 10,
   },
   textInput: {
     backgroundColor: 'white',
