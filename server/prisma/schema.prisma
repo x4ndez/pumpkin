@@ -10,10 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// session model to be linked to class with foreign key
-// when user clicks on the class, front end will pass date and search through class sessions.
-// sessions will be regenerated every 2 weeks
-
 model Class {
   id         Int          @id @default(autoincrement())
   className  String?
@@ -52,13 +48,6 @@ model DaysActive {
   classId Int
 }
 
-// className: classNameInp,
-//       startTime: startTimeInp,
-//       endTime: endTimeInp,
-//       dateOf: dateInp,
-//       recurring: recurringInp,
-//       daysActive: daysActiveInp,
-
 model WOD {
   id        Int      @id @default(autoincrement())
   name      String?
@@ -80,4 +69,27 @@ model User {
   accountActive Boolean     @default(false)
   createdAt     DateTime    @default(now())
   attendeeOf    Attendees[]
+  posts         Post[]
+  comments      Comment[]
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  content   String
+  likes     Int       @default(0)
+  createdAt DateTime  @default(now())
+  userId    User      @relation(fields: [createdBy], references: [id])
+  createdBy Int
+  comments  Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  likes     Int      @default(0)
+  createdAt DateTime @default(now())
+  userId    User     @relation(fields: [createdBy], references: [id])
+  createdBy Int
+  Post      Post?    @relation(fields: [postId], references: [id])
+  postId    Int?
 }
