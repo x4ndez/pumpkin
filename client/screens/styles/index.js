@@ -143,4 +143,16 @@ export const style = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
     },
+    textInput: {
+        backgroundColor: 'white',
+        borderColor: 'grey',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginBottom: 5,
+        width: '40%',
+    }
 });
