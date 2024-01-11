@@ -6,10 +6,11 @@ import AddMemberBtn from './components/AddMemberBtn';
 import ViewMembersBtn from './components/ViewMembersBtn';
 import AddClassBtn from './components/AddClassBtn';
 import AddWODBtn from './components/AddWODBtn';
-import SubHeading from './components/subHeading';
+import SubHeading from './components/SubHeading';
 import { style } from './styles';
 import { getWodsFromDate } from '../helpers';
 import WodItem from './components/WodItem';
+import CreatePost from './components/CreatePost';
 
 // update wod
 // update profile
@@ -113,6 +114,10 @@ export default function DashboardScreen({ navigation }) {
         props={{
           title: 'Announcements'
         }}
+      />
+
+      <CreatePost
+        
       />
 
       {/* <View>
