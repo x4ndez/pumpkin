@@ -6,7 +6,7 @@ import { startEndTimeFormat, getDuration } from '../helpers/dateFormatting';
 import { getSessionFromClass, attendSession, unattendSession, getAttendees, getWodsFromDate } from '../helpers';
 import { style } from './styles';
 import SelectClass from './components/SelectClass';
-import SubHeading from './components/subHeading';
+import SubHeading from './components/SubHeading';
 import WodItem from './components/WodItem';
 
 export default function SessionScreen({ route, navigation }) {
