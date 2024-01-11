@@ -121,3 +121,49 @@ export const getWodsFromDate = async (dateOf) => {
     return await res.json();
 
 }
+
+export const addPost = async (userId, content) => {
+
+    const payload = {
+        userId: userId,
+        title: title,
+        content: content,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/posts`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
+
+export const getAllPosts = async () => {
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    return await res.json();
+
+}
+
+export const getSinglePost = async (postId) => {
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/posts/${postId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    return await res.json();
+
+}
