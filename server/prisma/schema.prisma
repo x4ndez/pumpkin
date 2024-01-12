@@ -78,8 +78,8 @@ model Post {
   content   String
   likes     Int       @default(0)
   createdAt DateTime  @default(now())
-  userId    User      @relation(fields: [createdBy], references: [id])
-  createdBy Int
+  createdBy User      @relation(fields: [userId], references: [id])
+  userId    Int
   comments  Comment[]
 }
 
@@ -88,8 +88,8 @@ model Comment {
   content   String
   likes     Int      @default(0)
   createdAt DateTime @default(now())
-  userId    User     @relation(fields: [createdBy], references: [id])
-  createdBy Int
+  createdBy User     @relation(fields: [userId], references: [id])
+  userId    Int
   Post      Post?    @relation(fields: [postId], references: [id])
   postId    Int?
 }
