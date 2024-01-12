@@ -423,6 +423,32 @@ export const getSinglePost = async (postId: number) => {
     const query = await prisma.post.findUnique({
         where: {
             id: postId,
+        },
+        include: {
+            comments: {
+                include: {
+                    createdBy: {
+                        select: {
+                            name: true,
+                            proficiency: true,
+                            permissions: true,
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    return query;
+}
+
+export const addComment = async (postId: number, userId: number, content: string) => {
+
+    const query = await prisma.comment.create({
+        data: {
+            userId: userId,
+            postId: postId,
+            content: content,
         }
     });
 
