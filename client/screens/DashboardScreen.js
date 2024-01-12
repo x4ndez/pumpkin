@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView, Pressable } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import AddMemberBtn from './components/AddMemberBtn';
@@ -8,9 +8,10 @@ import AddClassBtn from './components/AddClassBtn';
 import AddWODBtn from './components/AddWODBtn';
 import SubHeading from './components/SubHeading';
 import { style } from './styles';
-import { getWodsFromDate } from '../helpers';
+import { getAllPosts, getWodsFromDate } from '../helpers';
 import WodItem from './components/WodItem';
 import CreatePost from './components/CreatePost';
+import Post from './components/Post';
 
 // update wod
 // update profile
@@ -19,20 +20,20 @@ import CreatePost from './components/CreatePost';
 export default function DashboardScreen({ navigation }) {
 
   const [wodsData, setWodsData] = useState();
+  const [postsData, setPostsData] = useState();
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const onLoad = async () => {
 
     const wods = await getWodsFromDate(new Date(Date.now()));
+    const posts = await getAllPosts();
     setWodsData(wods.data);
-
+    setPostsData(posts);
   }
 
   useEffect(() => {
     onLoad();
   }, []);
-
-  console.log(currentUser)
 
   const adminTools = [
     <AddMemberBtn />,
@@ -70,9 +71,12 @@ export default function DashboardScreen({ navigation }) {
               <AddClassBtn />
               <AddWODBtn navigation={navigation} />
 
-
             </ScrollView>
           </View>
+
+          <CreatePost
+            setPostsData={setPostsData}
+          />
         </View>
       }
 
@@ -116,9 +120,24 @@ export default function DashboardScreen({ navigation }) {
         }}
       />
 
-      <CreatePost
-        
-      />
+      {postsData &&
+        <FlatList
+          data={postsData}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) =>
+            <Pressable
+            // Make announcements pressable
+            >
+              <Post
+                props={{
+                  item: item,
+                }} />
+            </Pressable>
+          }
+        />
+      }
+
+
 
       {/* <View>
         <AddMemberBtn />
