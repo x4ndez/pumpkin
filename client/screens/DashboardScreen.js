@@ -126,7 +126,9 @@ export default function DashboardScreen({ navigation }) {
           keyExtractor={item => item.id}
           renderItem={({ item }) =>
             <Pressable
-            // Make announcements pressable
+              onPressOut={() => navigation.navigate('Post', {
+                postId: item.id
+              })}
             >
               <Post
                 props={{
