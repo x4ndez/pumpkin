@@ -38,15 +38,6 @@ export default function WodItem({ props }) {
           </View>
         }
 
-        {/* WOD TITLE */}
-        {/* <Text
-          style={[style.genericText, style.h2]}
-        >{props.item.name}</Text>
-
-        <Text
-          style={[style.genericText, style.h2]}
-        >{props.item.content}</Text> */}
-
       </View>
 
     </View>
