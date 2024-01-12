@@ -1,4 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
+import { addPost, getAllPosts, getSinglePost } from '../../../helpers';
 
 const router: Router = express.Router();
 
@@ -7,10 +8,21 @@ const router: Router = express.Router();
 router
     .route('/')
     .get(async (req: Request, res: Response) => {
-
+        const results = await getAllPosts();
+        res.status(200).json(results);
     })
     .post(async (req: Request, res: Response) => {
-
+        const { userId, content } = req.body;
+        const results = await addPost(userId, content);
+        res.status(200).json(results);
     });
+
+router
+    .route('/:postId')
+    .get(async (req: Request, res: Response) => {
+        const postId = Number(req.params.postId);
+        const results = await getSinglePost(postId);
+        res.status(200).json(results);
+    })
 
 export default router;
