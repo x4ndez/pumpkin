@@ -126,7 +126,6 @@ export const addPost = async (userId, content) => {
 
     const payload = {
         userId: userId,
-        title: title,
         content: content,
     }
 
