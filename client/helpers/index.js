@@ -166,3 +166,23 @@ export const getSinglePost = async (postId) => {
     return await res.json();
 
 }
+
+export const addComment = async (postId, userId, content) => {
+
+    const payload = {
+        userId: userId,
+        postId: postId,
+        content: content,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/posts/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
