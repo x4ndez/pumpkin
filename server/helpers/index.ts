@@ -389,6 +389,46 @@ export const getWodsFromDate = async (dateOf: Date) => {
     };
 }
 
+export const addPost = async (userId: number, content: string) => {
+
+    const query = await prisma.post.create({
+        data: {
+            userId: userId,
+            content: content,
+        }
+    });
+
+    return query;
+}
+
+export const getAllPosts = async () => {
+
+    const query = await prisma.post.findMany({
+        include: {
+            comments: true,
+            createdBy: {
+                select: {
+                    name: true,
+                }
+            }
+        }
+    });
+
+
+    return query;
+}
+
+export const getSinglePost = async (postId: number) => {
+
+    const query = await prisma.post.findUnique({
+        where: {
+            id: postId,
+        }
+    });
+
+    return query;
+}
+
 export interface Class {
     className: string
     classType: string
