@@ -12,6 +12,7 @@ import ViewWeekScreen from './screens/ViewWeekScreen';
 import AddWODScreen from './screens/AddWODScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SessionScreen from './screens/SessionScreen';
+import PostScreen from './screens/PostScreen';
 
 export default function App() {
 
@@ -73,6 +74,10 @@ export default function App() {
           <Stack.Screen
             name='Session'
             component={SessionScreen}
+          />
+          <Stack.Screen
+            name='Post'
+            component={PostScreen}
           />
         </Stack.Navigator>
 
