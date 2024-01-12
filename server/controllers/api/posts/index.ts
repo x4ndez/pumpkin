@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
-import { addPost, getAllPosts, getSinglePost } from '../../../helpers';
+import { addComment, addPost, getAllPosts, getSinglePost } from '../../../helpers';
 
 const router: Router = express.Router();
 
@@ -24,5 +24,13 @@ router
         const results = await getSinglePost(postId);
         res.status(200).json(results);
     })
+
+router
+    .route('/comments')
+    .post(async (req: Request, res: Response) => {
+        const { postId, userId, content } = req.body;
+        const results = await addComment(postId, userId, content);
+        res.status(200).json(results);
+    });
 
 export default router;
