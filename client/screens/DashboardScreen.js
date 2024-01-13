@@ -48,107 +48,113 @@ export default function DashboardScreen({ navigation }) {
 
     <View style={styles.container}>
 
-      {currentUser.permissions === 'admin' &&
-        <View>
-          <SubHeading
-            props={{
-              title: 'Admin Tools'
+      {/* ADMIN TOOLS */}
+
+      <View style={{
+        padding: 10,
+        backgroundColor: '#E0E0E0'
+      }}>
+
+        {currentUser.permissions === 'admin' &&
+          <View>
+            <SubHeading
+              props={{
+                title: 'Admin Tools'
+              }}
+            />
+
+            <View>
+              <ScrollView
+                horizontal={true}
+                contentContainerStyle={[styles.adminTools]}
+              >
+
+                <AddMemberBtn />
+                <ViewMembersBtn navigation={navigation} />
+                <AddClassBtn />
+                <AddWODBtn navigation={navigation} />
+
+              </ScrollView>
+            </View>
+
+            <CreatePost
+              setPostsData={setPostsData}
+            />
+          </View>
+        }
+
+      </View>
+
+      {/* USER VIEW */}
+
+      <View style={{
+        padding: 10,
+      }}>
+
+        <View style={style.section}>
+
+          {wodsData
+            ?
+            <View>
+              <SubHeading
+                props={{ title: 'Workout of the Day' }}
+              />
+              {wodsData.length > 0
+                ? <FlatList
+                  data={wodsData}
+                  keyExtractor={item => item.id}
+                  renderItem={({ item }) => (
+
+                    <WodItem
+                      props={{
+                        item: item,
+                      }}
+                    />
+
+                  )}
+                />
+                : <WodItem props={{ item: null }} />
+              }
+            </View >
+            :
+            <Text>Loading...</Text>
+          }
+
+          <Button
+            title='View Week'
+            onPress={() => {
+              navigation.navigate('View Week');
             }}
           />
 
-          <View>
-            <ScrollView
-              horizontal={true}
-              contentContainerStyle={[styles.adminTools]}
-            >
-
-              <AddMemberBtn />
-              <ViewMembersBtn navigation={navigation} />
-              <AddClassBtn />
-              <AddWODBtn navigation={navigation} />
-
-            </ScrollView>
-          </View>
-
-          <CreatePost
-            setPostsData={setPostsData}
-          />
         </View>
-      }
 
-      {wodsData
-        ?
-        <View>
-          <SubHeading
-            props={{ title: 'Workout of the Day' }}
-          />
-          {wodsData.length > 0
-            ? <FlatList
-              data={wodsData}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
-
-                <WodItem
-                  props={{
-                    item: item,
-                  }}
-                />
-
-              )}
-            />
-            : <WodItem props={{ item: null }} />
-          }
-        </View >
-        :
-        <Text>Loading...</Text>
-      }
-
-      <Button
-        title='View Week'
-        onPress={() => {
-          navigation.navigate('View Week');
-        }}
-      />
-
-      <SubHeading
-        props={{
-          title: 'Announcements'
-        }}
-      />
-
-      {postsData &&
-        <FlatList
-          data={postsData}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-            <Pressable
-              onPressOut={() => navigation.navigate('Post', {
-                postId: item.id
-              })}
-            >
-              <Post
-                props={{
-                  item: item,
-                }} />
-            </Pressable>
-          }
-        />
-      }
-
-
-
-      {/* <View>
-        <AddMemberBtn />
-        <ViewMembersBtn navigation={navigation} />
-        <AddClassBtn />
-        <AddWODBtn navigation={navigation} />
-        <Button
-          title='View Week'
-          onPress={() => {
-            navigation.navigate('View Week');
+        <SubHeading
+          props={{
+            title: 'Announcements'
           }}
         />
-      </View> */}
+
+        {postsData &&
+          <FlatList
+            data={postsData}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) =>
+              <Pressable
+                onPress={() => navigation.navigate('Post', {
+                  postId: item.id
+                })}
+              >
+                <Post
+                  props={{
+                    item: item,
+                  }} />
+              </Pressable>
+            }
+          />
+        }
+
+      </View>
 
     </View>
   );
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
     height: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
-    padding: 10,
+    // padding: 10,
   },
   textInput: {
     backgroundColor: 'white',
