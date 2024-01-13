@@ -5,9 +5,9 @@
 ## Description
 
 You are a gym owner that offers group training classes, and just like every established business, you need a way to communicate with your buffed up gym rats and tell them what's going on. PUMPKIN, an app with a name that makes you ask, "What does a pumpkin have to do with apps or buffed up gym rats?"... I actually do not know; but I do know that with this app, your members can:
-(1) View the class schedule for the week, and sign in to classes.
-(2) See their workout of the day and cry in pain as they read it.
-(3) Access announcements saying that class is canceled because everyone at the Christmas party consumed too much alcohol (You won't announce that, but everyone knows it's true.)
+- View the class schedule for the week, and sign in to classes.
+- See their workout of the day and cry in pain as they read it.
+- Access announcements saying that class is canceled because everyone at the Christmas party consumed too much alcohol (You won't announce that, but everyone knows it's true.)
 
 ## Table of Contents
 
