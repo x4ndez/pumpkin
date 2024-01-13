@@ -13,10 +13,6 @@ import WodItem from './components/WodItem';
 import CreatePost from './components/CreatePost';
 import Post from './components/Post';
 
-// update wod
-// update profile
-// update class
-
 export default function DashboardScreen({ navigation }) {
 
   const [wodsData, setWodsData] = useState();
@@ -62,8 +58,8 @@ export default function DashboardScreen({ navigation }) {
 
           <View>
             <ScrollView
-              horizontal
-              style={[styles.adminTools]}
+              horizontal={true}
+              contentContainerStyle={[styles.adminTools]}
             >
 
               <AddMemberBtn />
@@ -179,7 +175,7 @@ const styles = StyleSheet.create({
     width: '40%',
   },
   adminTools: {
-    width: '100%',
-    height: 100,
+    gap: 10,
+    paddingBottom: 10,
   },
 });
