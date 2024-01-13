@@ -26,57 +26,75 @@ export default function PostScreen({ route }) {
   return (
 
     <View
-      style={styles.container}
+      style={styles.globalContainer}
     >
 
       {postData &&
+
         <View>
-          <Post
-            props={{
-              item: postData,
-            }} />
 
-          <CreateComment
-            props={{
-              postId: route.params.postId,
-            }}
-            setPostData={setPostData}
-          />
+          <View
+            style={styles.container}
+          >
+            <Post
+              props={{
+                item: postData,
+              }} />
 
-          {postData.comments.length > 0
-            ? <FlatList
-              data={postData.comments}
-              keyExtractor={item => item.id}
-              renderItem={(item) =>
-                <Comment
-                  props={item}
+          </View>
+
+          <View style={style.commentsContainerWrapper}>
+
+            <View style={style.commentsContainer}>
+
+              {postData.comments.length > 0
+                ? <FlatList
+                  data={postData.comments}
+                  keyExtractor={item => item.id}
+                  renderItem={(item) =>
+                    <Comment
+                      props={item}
+                    />
+                  }
                 />
+                : <Text style={style.genericText}>No comments.</Text>
               }
+
+
+
+            </View>
+
+            <CreateComment
+              props={{
+                postId: route.params.postId,
+              }}
+              setPostData={setPostData}
             />
-            : <Text style={style.genericText}>No comments.</Text>
-          }
 
-
+          </View>
 
         </View>
+
       }
 
-
-
     </View>
-
-
 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    width: '100%',
+    height: '70%',
+  },
+  globalContainer: {
     backgroundColor: '#212121',
+    width: '100%',
     height: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
-    padding: 10,
   },
   textInput: {
     backgroundColor: 'white',

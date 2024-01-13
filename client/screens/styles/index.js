@@ -154,5 +154,51 @@ export const style = StyleSheet.create({
         paddingBottom: 5,
         marginBottom: 5,
         width: '40%',
-    }
+    },
+    commentsContainerWrapper: {
+        height: '30%',
+        backgroundColor: '#313131',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-start',
+    },
+    commentTextContainer: {
+        // backgroundColor: 'blue',
+        padding: 10,
+    },
+    commentTextWrapper: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center'
+    },
+    commentTextInput: {
+        backgroundColor: 'white',
+        fontSize: 12,
+        borderColor: 'grey',
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
+        width: '90%',
+        marginRight: 15,
+    },
+    commentSend: {
+        // width: '15%',
+        paddingTop: 5,
+        paddingBottom: 5,
+        // paddingLeft: 10,
+        // paddingRight: 10,
+        // backgroundColor: 'red',
+        borderRadius: 10,
+    },
+    commentSendImg: {
+        width: 20,
+        height: 20,
+    },
+    commentsContainer: {
+        height: '75%',
+        width: '100%',
+        padding: 10,
+    },
 });

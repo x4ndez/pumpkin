@@ -31,21 +31,33 @@ export default function CreateComment({ props, setPostData }) {
 
   return (
 
-    <View>
+    <View
+      style={[style.commentTextContainer]}
+    >
 
-      <Text style={[style.genericText]}>Leave a comment...</Text>
-      <TextInput
-        style={style.textInput}
-        multiline={true}
-        value={commentInp}
-        onChangeText={setCommentInp}
-        placeholder=''
-      />
+      <View
+        style={[style.flexRow, style.commentTextWrapper]}
+      >
 
-      <Button
-        title='Send'
-        onPress={onCommentSubmit}
-      />
+        <TextInput
+          style={[style.commentTextInput]}
+          multiline={true}
+          value={commentInp}
+          onChangeText={setCommentInp}
+          placeholder='Leave a comment...'
+        />
+
+        <Pressable
+          style={[style.commentSend, style.flexCenterCenterRow]}
+          onPress={onCommentSubmit}
+        >
+          <Image
+            style={style.commentSendImg}
+            source={require('../../assets/send_full.png')}
+          />
+        </Pressable>
+
+      </View>
 
     </View >
   )
