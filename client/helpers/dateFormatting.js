@@ -43,10 +43,25 @@ export const formatDate = (date, format) => {
         "November",
         "December"
     ];
+    const day = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ]
 
     // MMYYYY eg: December 2023
     if (format === 'MMYYYY') {
         return `${month[newDate.getMonth()]} ${newDate.getFullYear()}`;
+    }
+
+    // Saturday, 28/08/2024
+
+    if (format === 'ddDDMMYYYY') {
+        return `${day[newDate.getDay()]}, ${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`;
     }
 
 }
