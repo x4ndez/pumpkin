@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { style } from '../styles';
+import { formatDate } from '../../helpers/dateFormatting';
 
 export default function Post({ props }) {
 
@@ -32,6 +33,7 @@ export default function Post({ props }) {
             <Text
               style={[style.genericText, style.h2]}
             >{props.item.content}</Text>
+            <Text style={[style.subText]}>{formatDate(props.item.createdAt, 'ddDDMMYYYY')}</Text>
           </View>
         }
 
