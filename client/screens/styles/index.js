@@ -163,12 +163,12 @@ export const style = StyleSheet.create({
         alignItems: 'flex-start',
     },
     commentTextContainer: {
-        // backgroundColor: 'blue',
-        padding: 10,
+        backgroundColor: '#414141',
+        paddingLeft: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     commentTextWrapper: {
-        display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center'
     },
@@ -181,16 +181,12 @@ export const style = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         width: '90%',
-        marginRight: 15,
     },
     commentSend: {
-        // width: '15%',
-        paddingTop: 5,
-        paddingBottom: 5,
-        // paddingLeft: 10,
-        // paddingRight: 10,
-        // backgroundColor: 'red',
-        borderRadius: 10,
+        width: '10%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     commentSendImg: {
         width: 20,
@@ -201,4 +197,28 @@ export const style = StyleSheet.create({
         width: '100%',
         padding: 10,
     },
+    createPostContainer: {
+        backgroundColor: '#313131',
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 20,
+        paddingTop: 5,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    createPostTextInput: {
+        backgroundColor: 'white',
+        borderColor: 'grey',
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginBottom: 5,
+    },
+    section: {
+        marginBottom: 10,
+    }
 });
