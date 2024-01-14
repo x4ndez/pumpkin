@@ -220,6 +220,7 @@ export const style = StyleSheet.create({
     },
     section: {
         marginBottom: 10,
+        width: '100%',
     },
     loginContainer: {
         width: '100%',
