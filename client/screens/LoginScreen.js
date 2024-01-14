@@ -78,7 +78,7 @@ export default function LoginScreen({ navigation }) {
             onChangeText={onChangePasswordInp}
             secureTextEntry={passwordHidden}
             // placeholder='Password'
-            defaultValue='password'
+            defaultValue=''
             placeholderTextColor='#616161'
             textAlign='right'
           />
