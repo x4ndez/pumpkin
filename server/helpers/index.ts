@@ -429,6 +429,7 @@ export const getSinglePost = async (postId: number) => {
                 include: {
                     createdBy: {
                         select: {
+                            id: true,
                             name: true,
                             proficiency: true,
                             permissions: true,
