@@ -170,7 +170,7 @@ export const style = StyleSheet.create({
     },
     commentTextWrapper: {
         alignItems: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
     },
     commentTextInput: {
         backgroundColor: 'white',
@@ -220,5 +220,31 @@ export const style = StyleSheet.create({
     },
     section: {
         marginBottom: 10,
-    }
+    },
+    loginContainer: {
+        width: '100%',
+        backgroundColor: '#313131',
+        borderRadius: 20,
+        padding: 15,
+        marginBottom: 10,
+    },
+    emailContainer: {
+        // paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 0.5,
+        borderColor: 'grey',
+    },
+    passwordContainer: {
+        paddingTop: 10,
+        // paddingBottom: 10,
+    },
+    commentUserHeading: {
+        color: '#E0E0E0',
+        backgroundColor: '#424242',
+        borderRadius: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 2,
+        paddingBottom: 2,
+    },
 });
