@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView, Pressable, Image } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import AddMemberBtn from './components/AddMemberBtn';
@@ -89,6 +89,7 @@ export default function DashboardScreen({ navigation }) {
 
       <View style={{
         padding: 10,
+        width: '100%',
       }}>
 
         <View style={style.section}>
@@ -136,20 +137,66 @@ export default function DashboardScreen({ navigation }) {
         />
 
         {postsData &&
+
           <FlatList
             data={postsData}
             keyExtractor={item => item.id}
             renderItem={({ item }) =>
-              <Pressable
-                onPress={() => navigation.navigate('Post', {
-                  postId: item.id
-                })}
-              >
-                <Post
-                  props={{
-                    item: item,
-                  }} />
-              </Pressable>
+
+              <View>
+                {
+                  currentUser.permissions === 'admin'
+                    ? // If an admin, serve:
+                    <ScrollView
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={{
+                        width: '125%',
+                      }}
+                    >
+                      <View style={{ width: '80%' }}>
+                        <Pressable
+                          onPress={() => navigation.navigate('Post', {
+                            postId: item.id,
+                          })}
+                        >
+                          <Post
+                            props={{
+                              item: item,
+                            }} />
+
+                        </Pressable>
+                      </View>
+
+                      <View style={{
+                        width: '20%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}><Image
+                          source={require('../assets/remove.png')}
+                          style={{
+                            width: 25,
+                            height: 25,
+                          }}
+                        /></View>
+                    </ScrollView>
+                    : // If not an admin serve:
+                    <Pressable
+                      onPress={() => navigation.navigate('Post', {
+                        postId: item.id,
+                      })}
+                    >
+                      <Post
+                        props={{
+                          item: item,
+                        }} />
+
+                    </Pressable>
+                }
+
+
+              </View>
             }
           />
         }
@@ -164,6 +211,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#212121',
     height: '100%',
+    width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
     // padding: 10,
