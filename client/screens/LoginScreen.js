@@ -1,13 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, Alert, Pressable, Image } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import { localhostUrl } from '../config';
+import { style } from './styles';
 
 export default function LoginScreen({ navigation }) {
 
-  const [emailInp, onChangeEmailInp] = useState();
-  const [passwordInp, onChangePasswordInp] = useState();
+  const [emailInp, onChangeEmailInp] = useState('');
+  const [passwordInp, onChangePasswordInp] = useState('');
+  const [passwordHidden, setPasswordHidden] = useState(true);
+  const [loginDisabled, setLoginDisabled] = useState(true);
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
   async function loginPress() {
@@ -35,52 +38,112 @@ export default function LoginScreen({ navigation }) {
 
   }
 
-  // To be removed:
-  // navigation.navigate('Dashboard')
+  useEffect(() => {
+
+    if (emailInp.length > 0 && passwordInp.length > 0) {
+      setLoginDisabled(false);
+    } else {
+      setLoginDisabled(true);
+    }
+
+  }, [emailInp, passwordInp])
 
   return (
 
     <View style={styles.container}>
 
-      <Text>Pumpkin</Text>
+      <Text style={styles.pumpkin}>PUMPKIN</Text>
 
-      <TextInput
-        style={styles.textInput}
-        onChangeText={onChangeEmailInp}
-        placeholder='Email'
-      />
-      <TextInput
-        style={styles.textInput}
-        onChangeText={onChangePasswordInp}
-        secureTextEntry={true}
-        placeholder='Password'
-      />
-      <Button
-        title='Login'
-        onPress={loginPress}
-      />
+      <View style={style.loginContainer}>
 
+        <View style={[style.emailContainer, style.flexStartCenterRow, style.flexRow]}>
+          <Text style={[style.genericText, {
+            width: '20%',
+          }]}>Email</Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onChangeEmailInp}
+            placeholder='xande@elegal.com.au'
+            placeholderTextColor='#616161'
+            textAlign='right'
+          />
+        </View>
+
+        <View style={[style.passwordContainer, style.flexStartCenterRow, style.flexRow]}>
+          <Text style={[style.genericText, {
+            width: '20%',
+          }]}>Password</Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onChangePasswordInp}
+            secureTextEntry={passwordHidden}
+            // placeholder='Password'
+            defaultValue='password'
+            placeholderTextColor='#616161'
+            textAlign='right'
+          />
+          <View style={[style.flexCenterCenterRow, style.flexRow, {
+            width: '10%'
+          }]}>
+            <Pressable
+              onPress={() => setPasswordHidden(
+                passwordHidden ? false : true
+              )}>
+              <Image
+                source={require('../assets/password_hide.png')}
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+            </Pressable>
+          </View>
+        </View>
+
+
+      </View>
+      <View style={{
+        width: '100%',
+      }}>
+        <Button
+          title='Login'
+          onPress={loginPress}
+          disabled={loginDisabled}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    // flex: 1,
+    padding: 10,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#212121',
     alignItems: 'center',
     justifyContent: 'center',
   },
   textInput: {
-    backgroundColor: 'white',
-    borderColor: 'grey',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
-    marginBottom: 5,
-    width: '40%',
-  }
+    color: 'white',
+    // backgroundColor: 'white',
+    // borderColor: 'grey',
+    // borderWidth: 1,
+    // borderRadius: 5,
+    // paddingLeft: 10,
+    // paddingRight: 10,
+    // paddingTop: 5,
+    // paddingBottom: 5,
+    // marginBottom: 5,
+    width: '70%',
+  },
+  loginSubmit: {
+
+  },
+  pumpkin: {
+    color: 'white',
+    marginBottom: 100,
+    fontSize: 40,
+  },
 });
