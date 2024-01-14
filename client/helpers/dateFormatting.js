@@ -52,6 +52,20 @@ export const formatDate = (date, format) => {
         'Friday',
         'Saturday',
     ]
+    const monthMM = [
+        '01',
+        '02',
+        '03',
+        '04',
+        '05',
+        '06',
+        '07',
+        '08',
+        '09',
+        '10',
+        '11',
+        '12',
+    ]
 
     // MMYYYY eg: December 2023
     if (format === 'MMYYYY') {
@@ -61,7 +75,13 @@ export const formatDate = (date, format) => {
     // Saturday, 28/08/2024
 
     if (format === 'ddDDMMYYYY') {
-        return `${day[newDate.getDay()]}, ${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`;
+        return `${day[newDate.getDay()]}, ${newDate.getDate()}/${monthMM[newDate.getMonth()]}/${newDate.getFullYear()}`;
+    }
+
+    // 11:09 PM, 28/08/2024
+
+    if (format === '12hrDDMMYYYY') {
+        return `${newDate.toLocaleTimeString()}, ${newDate.getDate()}/${monthMM[newDate.getMonth()]}/${newDate.getFullYear()}`;
     }
 
 }
