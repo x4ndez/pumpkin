@@ -4,29 +4,58 @@ const prisma = new PrismaClient();
 
 const seedAdmins = async () => {
 
-    // model User {
-    //   id            Int @id @default (autoincrement())
-    //   email         String @unique
-    //   name          String
-    //   password      String
-    //   classesBooked Int @default (0)
-    //   bio           String ?
-    //             proficiency   String ? @default ("Newbie")
-    //   permissions   String @default ("user")
-    //   accountActive Boolean @default (true)
-    //   createdAt     DateTime @default (now())
-    //   attendeeOf    Attendees[]
-    //     }
+    await prisma.user.createMany({
 
-    await prisma.user.create({
-        data: {
-            email: 'admin@admin.com',
-            name: 'admin',
-            password: 'admin',
-            bio: 'I am an admin, just doing admin things.',
-            permissions: 'admin',
-            accountActive: true,
-        }
+        data: [
+            {
+                email: 'admin@admin.com',
+                name: 'admin',
+                password: 'admin',
+                bio: 'I am an admin, just doing admin things.',
+                permissions: 'admin',
+                accountActive: true,
+            },
+            {
+                email: 'tux@iron.com',
+                name: 'Tux',
+                password: 'admin',
+                bio: 'x0x0x0x0',
+                permissions: 'admin',
+                accountActive: true,
+            },
+            {
+                email: 'maz@iron.com',
+                name: 'Maz',
+                password: 'admin',
+                bio: 'lol, hey',
+                permissions: 'admin',
+                accountActive: true,
+            },
+            {
+                email: 'jonstone@gmail.com',
+                name: 'Jon Stone',
+                password: 'admin',
+                bio: 'I am the best at lifting things in this entire world.',
+                permissions: 'user',
+                accountActive: true,
+            },
+            {
+                email: 'jessrein@gmail.com',
+                name: 'Jess Reinhart',
+                password: 'admin',
+                bio: 'omg this app is so c00l',
+                permissions: 'user',
+                accountActive: true,
+            },
+            {
+                email: 'bilbo@gmail.com',
+                name: 'Bilbo Maggins',
+                password: 'admin',
+                bio: 'Almost got that ring bro, but at the gym, I get the rings every day.',
+                permissions: 'user',
+                accountActive: true,
+            },
+        ]
     });
 
 }
