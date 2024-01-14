@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, Button, FlatList, Alert, Vibration }
 import { useState, useEffect } from 'react';
 import { localhostUrl } from '../config';
 import { deleteUser } from '../helpers';
+import { style } from './styles';
+import SubHeading from './components/SubHeading';
 
 export default function ViewMembersScreen({ navigation }) {
 
@@ -22,48 +24,53 @@ export default function ViewMembersScreen({ navigation }) {
 
     <View style={styles.container}>
 
-      <Text>View Members</Text>
+      <SubHeading
+        props={{
+          title: 'View Members',
+        }}
+      />
       {userData
         ? <FlatList
           data={userData}
           keyExtractor={item => item.id}
           renderItem={({ item }) =>
-          (<View>
-            <Text>{item.name}</Text>
-            <Button
-              title='X'
-              onPress={() => {
-                Vibration.vibrate();
-                Alert.alert('Confirm',
-                  'Are you sure you want to delete this user?',
-                  [{
-                    text: 'Cancel', onPress: () => {
-                      return;
+          (<View style={style.memberContainer}>
+            <View><Text style={[style.genericText]}>{item.name}</Text></View>
+            <View>
+              <Button
+                title='X'
+                onPress={() => {
+                  Vibration.vibrate();
+                  Alert.alert('Confirm',
+                    'Are you sure you want to delete this user?',
+                    [{
+                      text: 'Cancel', onPress: () => {
+                        return;
+                      },
                     },
-                  },
-                  {
-                    text: 'Delete User', onPress: async () => {
-                      const user = await deleteUser(item.id);
-                      if (user.code === 1) {
-                        readMembers();
-                      } else {
-                        Alert.alert('Error', user.msg)
-                      }
-                    },
-                  }])
-              }}
-            />
-            <Button
-              title='Info'
-              onPress={() => {
-                navigation.navigate('Profile', {
-                  memberId: item.id,
-                })
-              }}
-            />
-          </View>)
-          }
-        />
+                    {
+                      text: 'Delete User', onPress: async () => {
+                        const user = await deleteUser(item.id);
+                        if (user.code === 1) {
+                          readMembers();
+                        } else {
+                          Alert.alert('Error', user.msg)
+                        }
+                      },
+                    }])
+                }}
+              />
+              <Button
+                title='Info'
+                onPress={() => {
+                  navigation.navigate('Profile', {
+                    memberId: item.id,
+                  })
+                }}
+              />
+            </View>
+          </View>
+          )} />
         : <Text>Loading...</Text>
       }
 
@@ -73,10 +80,12 @@ export default function ViewMembersScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#212121',
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    padding: 10,
   },
   textInput: {
     backgroundColor: 'white',
