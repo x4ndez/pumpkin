@@ -198,7 +198,7 @@ export const style = StyleSheet.create({
         padding: 10,
     },
     createPostContainer: {
-        backgroundColor: '#313131',
+        backgroundColor: '#515151',
         marginTop: 10,
         marginBottom: 10,
         borderRadius: 20,
@@ -247,5 +247,18 @@ export const style = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 2,
         paddingBottom: 2,
+    },
+    memberContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: '#414141',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingLeft: 20,
+        paddingRight: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        borderRadius: 20,
+        marginBottom: 10,
     },
 });
