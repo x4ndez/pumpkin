@@ -7,8 +7,8 @@ import { style } from './styles';
 
 export default function LoginScreen({ navigation }) {
 
-  const [emailInp, onChangeEmailInp] = useState('');
-  const [passwordInp, onChangePasswordInp] = useState('');
+  const [emailInp, onChangeEmailInp] = useState('admin@admin.com');
+  const [passwordInp, onChangePasswordInp] = useState('admin');
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [loginDisabled, setLoginDisabled] = useState(true);
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -62,6 +62,7 @@ export default function LoginScreen({ navigation }) {
           }]}>Email</Text>
           <TextInput
             style={styles.textInput}
+            value={emailInp}
             onChangeText={onChangeEmailInp}
             placeholder='xande@elegal.com.au'
             placeholderTextColor='#616161'
@@ -75,10 +76,10 @@ export default function LoginScreen({ navigation }) {
           }]}>Password</Text>
           <TextInput
             style={styles.textInput}
+            value={passwordInp}
             onChangeText={onChangePasswordInp}
             secureTextEntry={passwordHidden}
-            // placeholder='Password'
-            defaultValue=''
+            placeholder='*****'
             placeholderTextColor='#616161'
             textAlign='right'
           />
