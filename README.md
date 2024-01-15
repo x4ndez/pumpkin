@@ -41,6 +41,8 @@ Flaticon attributions in compliance with [Flaticon-supplied guidelines](https://
 
 - [Profile icon located in header created by Smashicons - Flaticon](https://www.flaticon.com/free-icons/user)<br>
 - [Send icon created by Amazona Adorada - Flaticon](https://www.flaticon.com/free-icons/send)<br>
+- [Password visible icon located on login screen created by th studio - Flaticon](https://www.flaticon.com/free-icons/password)<br>
+- [Delete icon created by Pixel perfect - Flaticon](https://www.flaticon.com/free-icons/delete)<br>
 
 ## Questions
 
