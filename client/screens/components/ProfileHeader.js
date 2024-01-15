@@ -29,12 +29,13 @@ export default function ProfileHeader({ props }) {
         <View style={{
           display: 'flex',
           alignItems: 'flex-end',
+          paddingRight: 20,
         }}>
           <View style={{
             flexDirection: 'row',
           }}>
 
-            
+
 
             <View style={{
               justifyContent: 'center',
@@ -61,13 +62,16 @@ export default function ProfileHeader({ props }) {
 
           </View>
 
+          <View>
 
-          <SubHeading
-            props={{
-              title: 'About'
-            }}
-          />
-          <Text style={[style.subText]}>{props.bio}</Text>
+            <SubHeading
+              props={{
+                title: 'About'
+              }}
+            />
+            <Text style={[style.subText]}>{props.bio}</Text>
+
+          </View>
         </View>
 
       </View>
@@ -75,7 +79,6 @@ export default function ProfileHeader({ props }) {
       <View
         style={[style.classMarker, {
           marginRight: 0,
-          marginLeft: 20,
         }]}
       ></View>
 
