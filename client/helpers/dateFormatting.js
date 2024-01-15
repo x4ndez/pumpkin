@@ -116,10 +116,22 @@ export const getDuration = (startTimeArg, endTimeArg) => {
 export const timeFormat = (timeArg) => {
 
     const time = new Date(timeArg);
+    const minutes = [
+        '00',
+        '01',
+        '02',
+        '03',
+        '04',
+        '05',
+        '06',
+        '07',
+        '08',
+        '09',
+    ];
 
     return (
         hours[time.getHours()] + ':' +
-        (time.getMinutes() === 0 ? '00' : time.getMinutes()) + ' ' +
+        (time.getMinutes() <= 9 ? minutes[time.getMinutes()] : time.getMinutes()) + ' ' +
         (time.getHours() <= 11 ? 'AM' : 'PM')
     )
 
