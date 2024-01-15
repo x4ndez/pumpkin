@@ -26,8 +26,9 @@ export default function SelectClass({ props }) {
 
         {/* CLASS TITLE */}
 
-        {val.className.length > 0
-          && <Text
+        {val.className != null
+          && 
+          <Text
             style={[style.genericText, style.h2]}
           >{val.className}</Text>
         }
