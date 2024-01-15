@@ -13,6 +13,7 @@ import AddWODScreen from './screens/AddWODScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SessionScreen from './screens/SessionScreen';
 import PostScreen from './screens/PostScreen';
+import CreateClassScreen from './screens/CreateClassScreen';
 
 export default function App() {
 
@@ -78,6 +79,10 @@ export default function App() {
           <Stack.Screen
             name='Post'
             component={PostScreen}
+          />
+          <Stack.Screen
+            name='Create Class'
+            component={CreateClassScreen}
           />
         </Stack.Navigator>
 
