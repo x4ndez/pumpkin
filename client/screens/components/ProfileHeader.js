@@ -19,17 +19,21 @@ export default function ProfileHeader({ props }) {
         justifyContent: 'flex-end',
         flexDirection: 'row',
         paddingRight: 10,
+        paddingLeft: 10,
         marginTop: 10,
         marginBottom: 20,
       }]}
     >
 
-      <View>
+      <View style={{
+        width: '100%'
+      }}>
 
         <View style={{
           display: 'flex',
           alignItems: 'flex-end',
           paddingRight: 20,
+          width: '100%'
         }}>
           <View style={{
             flexDirection: 'row',
@@ -62,7 +66,13 @@ export default function ProfileHeader({ props }) {
 
           </View>
 
-          <View>
+          <View style={{
+            display: 'flex',
+            // backgroundColor: 'red',
+            justifyContent: 'flex-start',
+            paddingLeft: 10,
+            width: '100%'
+          }}>
 
             <SubHeading
               props={{
