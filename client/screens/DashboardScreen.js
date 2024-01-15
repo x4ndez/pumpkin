@@ -52,7 +52,7 @@ export default function DashboardScreen({ navigation }) {
 
       <View style={{
         padding: 10,
-        backgroundColor: '#E0E0E0'
+        backgroundColor: '#313131'
       }}>
 
         {currentUser.permissions === 'admin' &&
