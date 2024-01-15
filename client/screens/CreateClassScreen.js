@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Linking, Modal, Alert, Switch, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
+import { localhostUrl } from '../config';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
@@ -9,7 +10,7 @@ import { style } from './styles';
 import SubHeading from './components/SubHeading';
 import { timeFormat } from '../helpers/dateFormatting';
 
-export default function CreateClassScreen() {
+export default function CreateClassScreen({ navigation }) {
 
   const { currentUser } = useContext(UserContext);
   const pickerOptions = [
@@ -60,6 +61,12 @@ export default function CreateClassScreen() {
       },
       body: JSON.stringify(payload),
     });
+
+    const feedback = await res.json();
+
+    Alert.alert(`Session`, feedback.msg);
+    navigation.navigate('Dashboard');
+
   }
 
   return (
