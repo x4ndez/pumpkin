@@ -25,9 +25,12 @@ export default function SelectClass({ props }) {
       >
 
         {/* CLASS TITLE */}
-        <Text
-          style={[style.genericText, style.h2]}
-        >{val.className}</Text>
+
+        {val.className.length > 0
+          && <Text
+            style={[style.genericText, style.h2]}
+          >{val.className}</Text>
+        }
 
         <View
           style={[style.flexStartCenter, style.flexRow]}
