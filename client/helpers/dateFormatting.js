@@ -112,3 +112,15 @@ export const getDuration = (startTimeArg, endTimeArg) => {
     )
 
 }
+
+export const timeFormat = (timeArg) => {
+
+    const time = new Date(timeArg);
+
+    return (
+        hours[time.getHours()] + ':' +
+        (time.getMinutes() === 0 ? '00' : time.getMinutes()) + ' ' +
+        (time.getHours() <= 11 ? 'AM' : 'PM')
+    )
+
+}
