@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native
 import { useState, useEffect } from 'react';
 import { getSingleMember } from '../helpers';
 import { formatDate } from '../helpers/dateFormatting';
+import ProfileHeader from './components/ProfileHeader';
 
 export default function ProfileScreen({ route, navigation }) {
 
@@ -22,24 +23,52 @@ export default function ProfileScreen({ route, navigation }) {
 
       {userData
         ? (
-          <View
-            style={styles.memberHeader}
-          >
-            <View
-              style={styles.memberImage}
-            >
+
+          <View style={{
+            display: 'flex',
+            alignItems: 'flex-end'
+          }}>
+
+            <ProfileHeader
+              props={userData}
+            />
+
+            <View style={{
+              backgroundColor: '#313131',
+              width: '100%',
+              height: '100%',
+              borderRadius: 20
+            }}>
+
+              <View style={{
+                width: 150,
+                height: 150,
+                backgroundColor: '#414141',
+                margin: 10,
+                borderRadius: 30,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                <Text style={{
+                  fontSize: 12,
+                  color: '#757575',
+                  letterSpacing: 2,
+                }}>
+                  CLASSES
+                </Text>
+
+                <Text style={{
+                  fontSize: 60,
+                  color: 'white'
+                }}>
+                  {userData.classesBooked}
+                </Text>
+              </View>
 
             </View>
-            <View
-              style={styles.memberDescription}
-            >
-              <Text style={styles.h2}>{userData.name}</Text>
-              <Text style={styles.h3}>{userData.proficiency}</Text>
-              <Text style={styles.h3}>Member Since: {formatDate(userData.createdAt, 'MMYYYY')}</Text>
-            </View>
-
-
           </View>
+
         )
         : <Text>Loading...</Text>
       }
@@ -53,8 +82,10 @@ export default function ProfileScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    margin: 10,
-    backgroundColor: '#fff',
+    padding: 10,
+    backgroundColor: '#212121',
+    height: '100%',
+    width: '100%'
     // alignItems: 'center',
     // justifyContent: 'flex-start',
   },
