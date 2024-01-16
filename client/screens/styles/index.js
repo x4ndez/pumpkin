@@ -70,7 +70,7 @@ export const style = StyleSheet.create({
         width: 8,
         height: '100%',
         backgroundColor: '#B2BABB',
-        marginRight: 20,
+        // marginRight: 20,
         borderRadius: 5,
     },
     flexStartCenter: {
