@@ -1,7 +1,6 @@
 # Pumpkin
 
-<img src="./assets/screenshot_01.png" height="800" />
-<img src="./assets/screenshot_02.png" height="800" />
+<img src="./assets/screenshot.png" height="800" />
 
 ## Description
 
