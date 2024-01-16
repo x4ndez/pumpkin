@@ -52,7 +52,7 @@ model WOD {
   id        Int      @id @default(autoincrement())
   name      String?
   date      DateTime
-  content   String?
+  content   String?  @db.VarChar(2000)
   type      String?
   createdAt DateTime @default(now())
 }
@@ -63,7 +63,7 @@ model User {
   name          String
   password      String
   classesBooked Int         @default(0)
-  bio           String?
+  bio           String?     @db.VarChar(1000)
   proficiency   String?     @default("Newbie")
   permissions   String      @default("user")
   accountActive Boolean     @default(false)
@@ -75,7 +75,7 @@ model User {
 
 model Post {
   id        Int       @id @default(autoincrement())
-  content   String
+  content   String    @db.VarChar(2000)
   likes     Int       @default(0)
   createdAt DateTime  @default(now())
   createdBy User      @relation(fields: [userId], references: [id])
@@ -85,7 +85,7 @@ model Post {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  content   String
+  content   String   @db.VarChar(2000)
   likes     Int      @default(0)
   createdAt DateTime @default(now())
   createdBy User     @relation(fields: [userId], references: [id])
