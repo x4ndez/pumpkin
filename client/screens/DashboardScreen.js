@@ -31,19 +31,6 @@ export default function DashboardScreen({ navigation }) {
     onLoad();
   }, []);
 
-  const adminTools = [
-    <AddMemberBtn />,
-    <ViewMembersBtn navigation={navigation} />,
-    <AddClassBtn />,
-    <AddWODBtn navigation={navigation} />,
-    <Button
-      title='View Week'
-      onPress={() => {
-        navigation.navigate('View Week');
-      }}
-    />,
-  ]
-
   return (
 
     <View style={styles.container}>
@@ -87,127 +74,127 @@ export default function DashboardScreen({ navigation }) {
 
       {/* USER VIEW */}
 
-      <ScrollView
-        horizontal={false}
-      >
+      <View style={{
+        padding: 10,
+        width: '100%',
+      }}>
 
-        <View style={{
-          padding: 10,
-          width: '100%',
-        }}>
+        <View style={style.section}>
 
-          <View style={style.section}>
-
-            {wodsData
-              ?
-              <View>
+          {wodsData
+            ?
+            <View style={{
+              height: 200
+            }}>
                 <SubHeading
                   props={{ title: 'Workout of the Day' }}
                 />
-                {wodsData.length > 0
-                  ? <FlatList
-                    data={wodsData}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => (
+              {wodsData.length > 0
+                ? <FlatList
+                  data={wodsData}
+                  keyExtractor={item => item.id}
+                  renderItem={({ item }) => (
 
-                      <WodItem
-                        props={{
-                          item: item,
-                        }}
-                      />
+                    <WodItem
+                      props={{
+                        item: item,
+                      }}
+                    />
 
-                    )}
-                  />
-                  : <WodItem props={{ item: null }} />
-                }
-              </View >
-              :
-              <Text>Loading...</Text>
-            }
+                  )}
+                />
+                : <WodItem props={{ item: null }} />
+              }
+            </View >
+            :
+            <Text>Loading...</Text>
+          }
 
-            <Button
-              title='View Week'
-              onPress={() => {
-                navigation.navigate('View Week');
-              }}
-            />
-
-          </View>
-
-          <SubHeading
-            props={{
-              title: 'Announcements'
+          <View style={{
+            marginTop: 15,
+          }}>
+          <Button
+            title='View Week'
+            onPress={() => {
+              navigation.navigate('View Week');
             }}
           />
-
-          {postsData &&
-
-            <FlatList
-              data={postsData}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) =>
-
-                <View>
-                  {
-                    currentUser.permissions === 'admin'
-                      ? // If an admin, serve:
-                      <ScrollView
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{
-                          width: '125%',
-                        }}
-                      >
-                        <View style={{ width: '80%' }}>
-                          <Pressable
-                            onPress={() => navigation.navigate('Post', {
-                              postId: item.id,
-                            })}
-                          >
-                            <Post
-                              props={{
-                                item: item,
-                              }} />
-
-                          </Pressable>
-                        </View>
-
-                        <View style={{
-                          width: '20%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}><Image
-                            source={require('../assets/remove.png')}
-                            style={{
-                              width: 25,
-                              height: 25,
-                            }}
-                          /></View>
-                      </ScrollView>
-                      : // If not an admin serve:
-                      <Pressable
-                        onPress={() => navigation.navigate('Post', {
-                          postId: item.id,
-                        })}
-                      >
-                        <Post
-                          props={{
-                            item: item,
-                          }} />
-
-                      </Pressable>
-                  }
-
-
-                </View>
-              }
-            />
-          }
+          </View>
 
         </View>
 
-      </ScrollView>
+        <SubHeading
+          props={{
+            title: 'Announcements'
+          }}
+        />
+
+        {postsData &&
+
+          <FlatList
+            data={postsData}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) =>
+
+              <View>
+                {
+                  currentUser.permissions === 'admin'
+                    ? // If an admin, serve:
+                    <ScrollView
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={{
+                        width: '125%',
+                      }}
+                    >
+                      <View style={{ width: '80%' }}>
+                        <Pressable
+                          onPress={() => navigation.navigate('Post', {
+                            postId: item.id,
+                          })}
+                        >
+                          <Post
+                            props={{
+                              item: item,
+                            }} />
+
+                        </Pressable>
+                      </View>
+
+                      <View style={{
+                        width: '20%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}><Image
+                          source={require('../assets/remove.png')}
+                          style={{
+                            width: 25,
+                            height: 25,
+                          }}
+                        /></View>
+                    </ScrollView>
+                    : // If not an admin serve:
+                    <Pressable
+                      onPress={() => navigation.navigate('Post', {
+                        postId: item.id,
+                      })}
+                    >
+                      <Post
+                        props={{
+                          item: item,
+                        }} />
+
+                    </Pressable>
+                }
+
+
+              </View>
+            }
+          />
+        }
+
+      </View>
 
     </View>
   );
