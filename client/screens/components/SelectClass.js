@@ -21,7 +21,10 @@ export default function SelectClass({ props }) {
       ></View>
 
       <View
-        style={style.flexStartCenter}
+        style={[style.flexStartCenter, {
+          paddingLeft: 20,
+          paddingRight: 20,
+        }]}
       >
 
         {/* CLASS TITLE */}

@@ -27,7 +27,10 @@ export default function WodItem({ props }) {
             style={[style.subText, style.h2]}
           >No workout assigned yet.</Text>
           :
-          <View>
+          <View style={{
+            paddingLeft: 20,
+            paddingRight: 20,
+          }}>
             <Text
               style={[style.genericText, style.h2]}
             >{props.item.name}</Text>

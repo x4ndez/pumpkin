@@ -29,7 +29,10 @@ export default function Post({ props }) {
             style={[style.subText, style.h2]}
           >No posts yet.</Text>
           :
-          <View>
+          <View style={{
+            paddingLeft: 20,
+            paddingRight: 20,
+          }}>
             <Text
               style={[style.genericText, style.h2]}
             >{props.item.content}</Text>
