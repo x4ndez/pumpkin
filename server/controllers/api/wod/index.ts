@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
-import { addWOD, getWodsFromDate } from '../../../helpers';
+import { addWOD, deleteWod, getWodsFromDate } from '../../../helpers';
 
 const router: Router = express.Router();
 
@@ -17,6 +17,15 @@ router
         const newWOD = await addWOD(name, content, dateOf);
         console.log(newWOD);
         if (newWOD.code === 1) res.status(200).json(newWOD);
+        else res.status(400);
+
+    })
+    .delete(async (req: Request, res: Response) => {
+
+        const { wodId } = req.body;
+
+        const deletedWod = await deleteWod(wodId);
+        if (deletedWod.code === 1) res.status(200).json(deletedWod);
         else res.status(400);
 
     });

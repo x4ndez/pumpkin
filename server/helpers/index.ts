@@ -456,6 +456,38 @@ export const addComment = async (postId: number, userId: number, content: string
     return query;
 }
 
+export const deleteWod = async (wodId: number) => {
+
+    const checkWod = await prisma.wOD.findUnique({
+        where: {
+            id: wodId,
+        }
+    });
+
+    if (checkWod === null) {
+        return {
+            code: 0,
+            msg: 'Request Failed! WOD does not exist!',
+        };
+    }
+
+    const deletedUser = await prisma.wOD.delete({
+        where: {
+            id: wodId,
+        }
+    }).catch((err) => {
+        return {
+            code: 0,
+            msg: `Failed request! Callback: ${err}`,
+        };
+    });
+
+    return {
+        code: 1,
+        msg: 'WOD removed!',
+    };
+
+}
 export interface Class {
     className: string
     classType: string
