@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
-import { addWOD, deleteWod, getWodsFromDate } from '../../../helpers';
+import { addWOD, deleteWod, getAllWod, getWodsFromDate } from '../../../helpers';
 
 const router: Router = express.Router();
 
@@ -8,7 +8,9 @@ const router: Router = express.Router();
 router
     .route('/')
     .get(async (req: Request, res: Response) => {
-
+        // GET ALL WODs
+        const wodList = await getAllWod();
+        res.status(200).json(wodList);
     })
     .post(async (req: Request, res: Response) => {
 

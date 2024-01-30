@@ -555,6 +555,11 @@ export const deletePost = async (postId: number) => {
 
 }
 
+export const getAllWod = async () => {
+    const query = await prisma.wOD.findMany({});
+    return query;
+}
+
 export interface Class {
     className: string
     classType: string
