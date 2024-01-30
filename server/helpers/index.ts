@@ -521,6 +521,40 @@ export const deleteClass = async (classId: number) => {
     };
 
 }
+
+export const deletePost = async (postId: number) => {
+
+    const checkPost = await prisma.class.findUnique({
+        where: {
+            id: postId,
+        }
+    });
+
+    if (checkPost === null) {
+        return {
+            code: 0,
+            msg: 'Request Failed! Post does not exist!',
+        };
+    }
+
+    const deletedPost = await prisma.post.delete({
+        where: {
+            id: postId,
+        }
+    }).catch((err) => {
+        return {
+            code: 0,
+            msg: `Failed request! Callback: ${err}`,
+        };
+    });
+
+    return {
+        code: 1,
+        msg: 'Post removed!',
+    };
+
+}
+
 export interface Class {
     className: string
     classType: string

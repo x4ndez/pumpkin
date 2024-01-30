@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
-import { addComment, addPost, getAllPosts, getSinglePost } from '../../../helpers';
+import { addComment, addPost, deletePost, getAllPosts, getSinglePost } from '../../../helpers';
 
 const router: Router = express.Router();
 
@@ -15,6 +15,16 @@ router
         const { userId, content } = req.body;
         const results = await addPost(userId, content);
         res.status(200).json(results);
+    })
+    .delete(async (req: Request, res: Response) => {
+
+        const { postId } = req.body;
+
+        const deletedPost = await deletePost(postId);
+
+        if (deletedPost.code === 1) return res.status(200).json(deletedPost);
+        else return res.status(400);
+
     });
 
 router
