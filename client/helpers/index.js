@@ -204,3 +204,21 @@ export const deleteWod = async (wodId) => {
     return await res.json();
 
 }
+
+export const deleteClass = async (classId) => {
+
+    const payload = {
+        classId: classId,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/classes`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
