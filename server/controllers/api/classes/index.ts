@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
-import { Class } from '../../../helpers'
+import { Class, deleteClass } from '../../../helpers'
 import {
     addClass,
     getClasses,
@@ -30,6 +30,16 @@ router
         const newBatchSessions = await batchAddSessions(selectClass); // add 4 weeks of sessions to the class
 
         res.status(200).json(newBatchSessions);
+
+    })
+    .delete(async (req: Request, res: Response) => {
+
+        const { classId } = req.body;
+
+        const deletedClass = await deleteClass(classId);
+
+        if (deletedClass.code === 1) res.status(200).json(deletedClass);
+        else res.status(400);
 
     })
 

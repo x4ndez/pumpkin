@@ -471,7 +471,7 @@ export const deleteWod = async (wodId: number) => {
         };
     }
 
-    const deletedUser = await prisma.wOD.delete({
+    const deletedWod = await prisma.wOD.delete({
         where: {
             id: wodId,
         }
@@ -485,6 +485,39 @@ export const deleteWod = async (wodId: number) => {
     return {
         code: 1,
         msg: 'WOD removed!',
+    };
+
+}
+
+export const deleteClass = async (classId: number) => {
+
+    const checkClass = await prisma.class.findUnique({
+        where: {
+            id: classId,
+        }
+    });
+
+    if (checkClass === null) {
+        return {
+            code: 0,
+            msg: 'Request Failed! Class does not exist!',
+        };
+    }
+
+    const deletedClass = await prisma.class.delete({
+        where: {
+            id: classId,
+        }
+    }).catch((err) => {
+        return {
+            code: 0,
+            msg: `Failed request! Callback: ${err}`,
+        };
+    });
+
+    return {
+        code: 1,
+        msg: 'Class removed!',
     };
 
 }
