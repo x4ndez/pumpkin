@@ -222,3 +222,21 @@ export const deleteClass = async (classId) => {
     return await res.json();
 
 }
+
+export const deletePost = async (postId) => {
+
+    const payload = {
+        postId: postId,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/posts`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
