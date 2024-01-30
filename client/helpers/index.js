@@ -240,3 +240,16 @@ export const deletePost = async (postId) => {
     return await res.json();
 
 }
+
+export const getAllWod = async () => {
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/wod`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    return await res.json();
+
+}
