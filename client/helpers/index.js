@@ -186,3 +186,21 @@ export const addComment = async (postId, userId, content) => {
     return await res.json();
 
 }
+
+export const deleteWod = async (wodId) => {
+
+    const payload = {
+        wodId: wodId,
+    }
+
+    const res = await fetch(`http://${localhostUrl}:3000/api/wod`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+    });
+
+    return await res.json();
+
+}
