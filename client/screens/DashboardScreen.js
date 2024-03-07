@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView, Pressable, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking, FlatList, ScrollView, Pressable, Image, Alert } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import AddMemberBtn from './components/AddMemberBtn';
@@ -8,7 +8,7 @@ import AddClassBtn from './components/AddClassBtn';
 import AddWODBtn from './components/AddWODBtn';
 import SubHeading from './components/SubHeading';
 import { style } from './styles';
-import { getAllPosts, getWodsFromDate } from '../helpers';
+import { deletePost, getAllPosts, getWodsFromDate } from '../helpers';
 import WodItem from './components/WodItem';
 import CreatePost from './components/CreatePost';
 import Post from './components/Post';
@@ -84,11 +84,11 @@ export default function DashboardScreen({ navigation }) {
           {wodsData
             ?
             <View style={{
-              height: 200
+              // height: 100
             }}>
-                <SubHeading
-                  props={{ title: 'Workout of the Day' }}
-                />
+              <SubHeading
+                props={{ title: 'Workout of the Day' }}
+              />
               {wodsData.length > 0
                 ? <FlatList
                   data={wodsData}
@@ -113,12 +113,12 @@ export default function DashboardScreen({ navigation }) {
           <View style={{
             marginTop: 15,
           }}>
-          <Button
-            title='View Week'
-            onPress={() => {
-              navigation.navigate('View Week');
-            }}
-          />
+            <Button
+              title='View Week'
+              onPress={() => {
+                navigation.navigate('View Week');
+              }}
+            />
           </View>
 
         </View>
@@ -132,6 +132,9 @@ export default function DashboardScreen({ navigation }) {
         {postsData &&
 
           <FlatList
+            style={{
+              height: '40%'
+            }}
             data={postsData}
             keyExtractor={item => item.id}
             renderItem={({ item }) =>
@@ -161,18 +164,24 @@ export default function DashboardScreen({ navigation }) {
                         </Pressable>
                       </View>
 
-                      <View style={{
-                        width: '20%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}><Image
+                      <Pressable
+                        onPress={() => {
+                          deletePost(item.id);
+                          Alert.alert('Announcement deleted!', `Post by ${item.createdBy.name} was deleted!`);
+                          onLoad();
+                        }}
+                        style={{
+                          width: '20%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}><Image
                           source={require('../assets/remove.png')}
                           style={{
                             width: 25,
                             height: 25,
                           }}
-                        /></View>
+                        /></Pressable>
                     </ScrollView>
                     : // If not an admin serve:
                     <Pressable
