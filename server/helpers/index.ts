@@ -560,6 +560,14 @@ export const getAllWod = async () => {
     return query;
 }
 
+// export const updatePost = async (postId: number, putContent: string) => {
+//     const updatedPost = prisma.post.update({
+//         where: {
+//             id: postId,
+//         }
+//     });
+// }
+
 export interface Class {
     className: string
     classType: string

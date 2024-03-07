@@ -16,6 +16,12 @@ router
         const results = await addPost(userId, content);
         res.status(200).json(results);
     })
+    // .put(async (req: Request, res: Response) => {
+    //     const { postId, putContent } = req.body;
+    //     const updatedPost = await updatePost(postId, putContent);
+    //     if (updatedPost.code === 1) return res.status(200).json(updatedPost);
+    //     else return res.status(400);
+    // })
     .delete(async (req: Request, res: Response) => {
 
         const { postId } = req.body;
