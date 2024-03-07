@@ -14,6 +14,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import SessionScreen from './screens/SessionScreen';
 import PostScreen from './screens/PostScreen';
 import CreateClassScreen from './screens/CreateClassScreen';
+import MenuButton from './screens/components/MenuButton';
+import MembershipScreen from './screens/MembershipScreen';
 
 export default function App() {
 
@@ -53,7 +55,11 @@ export default function App() {
               headerBackVisible: false,
 
               headerRight: () => (
-                <ProfileButton />),
+                <>
+                  <ProfileButton />
+                  <MenuButton />
+                </>
+              ),
             }}
           />
           <Stack.Screen
@@ -83,6 +89,10 @@ export default function App() {
           <Stack.Screen
             name='Create Class'
             component={CreateClassScreen}
+          />
+          <Stack.Screen
+            name='View Membership'
+            component={MembershipScreen}
           />
         </Stack.Navigator>
 
