@@ -261,4 +261,33 @@ export const style = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 10,
     },
+    menuContainer: {
+        // position: 'absolute',
+        backgroundColor: 'black',
+        opacity: 0.9,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+
+    },
+    menuMain: {
+        backgroundColor: 'grey',
+        flex: 0.2,
+        margin: 10,
+        borderRadius: 20,
+    },
+    menuDeadSpace: {
+        // backgroundColor: 'green',
+        flex: 0.8
+    },
+    menuBtn: {
+        width: '100%',
+        height: 80,
+        // backgroundColor: 'green',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
